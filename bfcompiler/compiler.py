@@ -8,33 +8,27 @@ import re
 import argparse
 import os
 
-comments = re.compile( "[^\[\]+-.,><]+(.*)" )
-plusses  = re.compile( "([+]+)(.*)" )
-minuses  = re.compile( "([-]+)(.*)" )
-lefts    = re.compile( "([<]+)(.*)" )
-rights   = re.compile( "([>]+)(.*)" )
+comments     = re.compile( "[^\[\]+-><]+(.*)" )
+counters     = re.compile( "([+-]+)(.*)" )
+ptrmovements = re.compile( "([<>]+)(.*)" )
 
 # Compiles a brainfuck program to assembly code
 def compile( program, depth=0 ):
     out = ""
     loops = 0
     while len( program ) > 0:
-        plusmatch = plusses.match( program )
-        if( plusmatch ):
-            out += "    add [eax], byte %d\n" % ( len( plusmatch.group(1) ) % 256 )
-            program = plusmatch.group(2)
-        minusmatch = minuses.match( program )
-        if( minusmatch ):
-            out += "    sub [eax], byte %d\n" % ( len( minusmatch.group(1) ) % 256 )
-            program = minusmatch.group(2)
-        leftsmatch = lefts.match( program )
-        if( leftsmatch ):
-            out += "    add eax, %d\n" % len( leftsmatch.group(1) )
-            program = leftsmatch.group(2)
-        rightsmatch = rights.match( program )
-        if( rightsmatch ):
-            out += "    sub eax, %d\n" % len( rightsmatch.group(1) )
-            program = rightsmatch.group(2)
+        countersmatch = counters.match( program )
+        if( countersmatch ):
+            substring = countersmatch.group(1)
+            value     = 2 * substring.count( '+' ) - len( substring )
+            out      += "    add byte [eax], byte %d\n" % ( value % 256 )
+            program   = countersmatch.group(2)
+        ptrmovementsmatch = ptrmovements.match( program )
+        if( ptrmovementsmatch ):
+            substring = ptrmovementsmatch.group(1)
+            value     = 2 * substring.count( '>' ) - len( substring )
+            out      += "    add eax, %d\n" % value
+            program   = ptrmovementsmatch.group(2)
         commentsmatch = comments.match( program )
         if( commentsmatch ):
             program = commentsmatch.group(1)

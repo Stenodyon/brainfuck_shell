@@ -5,7 +5,7 @@ An OS entirely written in Brainfuck (except for the bootloader)
 
 ## Building
 
-First you'll need nasm :
+First you'll need nasm : (if you don't want it installed it is included in the repo)
 ```bash
 sudo apt-get install nasm
 ```
