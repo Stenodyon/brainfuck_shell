@@ -1,12 +1,12 @@
 	%define loc 0x1000
 	%define drive 0x80
-	%define os_sect 2
-	[bits 16]
-	[org 0]
+	%define os_sect 2o
 
-	jmp 0x7c0:start
+org	 0x7c00			;Bootloaders are loaded at 0x7c0:0000
 
-start:				;to set cs=0x7c0
+bits	 16
+
+start:
 	mov ax, cs
 	mov ds, ax
 	mov es, ax
@@ -27,17 +27,20 @@ start:				;to set cs=0x7c0
 	mov al, 0x10		;number of sectors to load
 
 	call loadsector
-
-	push loc
 	
-	jmp loc:0000		;start the program
+	jmp loc:0x0000		;start the program
 
 loadsector:
-	mov bx, 0
+	mov bx, 0		; es:bx = buffer address pointer
+	;; dl : drive
+	;; 0x00 : First floppy
+	;; 0x01 : Second floppy
+	;; 0x80 : First hard drive   <- this one
+	;; 0x81 : Second hard drive
 	mov dl, drive
-	mov dh, 0
-	mov ch, 0
-	mov ah, 2
+	mov dh, 0		; Head (whatever that means)
+	mov ch, 0		; Cylinder
+	mov ah, 2		; ah = 0x02 : Read sectors from drive
 	int 0x13		;load sector from image to RAM
 	jc err
 	ret
@@ -66,5 +69,8 @@ _dne:
 
 	msg db "Booting successful..", 10, 13, "Press any key to continue !", 10, 13, 10, 13, 0
 	erro db "Error loading sector ", 10, 13, 0
-	times 510 - ($-$$) db 0
+	;; $      = current line
+	;; $$     = address of first instruction (should be 0x7c00)
+	;; $ - $$ = number of bytes since the start
+times 510 - ($-$$) db 0
 	dw 0xaa55

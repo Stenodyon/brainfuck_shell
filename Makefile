@@ -1,20 +1,23 @@
 
-NASM="./nasm"
+NASM=bin/nasm
+BOCHS=bin/bochs
 
 default: c.img
 
 c.img: .FORCE
 
 .FORCE:
+	python3 bfcompiler/compiler.py bfcompiler/os.bf
+	cat -n bfcompiler/os.asm
 	$(NASM) bfos.asm -f bin -o boot.img
-	python3 compilebf.py
 	$(NASM) os.asm -f bin -o os.img -l oslist.txt
 	cat boot.img os.img > bfos.img
-	python3 upload.py bfos.img -o c.img
+#	python3 upload.py bfos.img -o c.img
+	truncate -s 10321920 bfos.img
 
 .PHONY: run
 run: c.img
-	bochs -qf newbochsconfig | tee execdump.txt
+	$(BOCHS) -qf newbochsconfig | tee execdump.txt
 
 .PHONY: clean
 clean:
