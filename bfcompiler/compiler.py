@@ -8,10 +8,10 @@ import re
 import argparse
 import os
 
-comments     = re.compile( "[^\[\]+-><.]" )
+comments     = re.compile( "[^\[\]+-><.,]" )
 counters     = re.compile( "([+-]+)(.*)" )
 ptrmovements = re.compile( "([<>]+)(.*)" )
-clear        = re.compile( "[+-]*(\[+\]+|\[-\])(.*)" )
+clear        = re.compile( "[+-]*(\[+\]+|\[-\])+([+-]*)(.*)" )
 
 # Compiles a brainfuck program to assembly code
 def compile( program, depth=0 ):
@@ -20,21 +20,25 @@ def compile( program, depth=0 ):
     while len( program ) > 0:
         clearmatch = clear.match( program )
         if clearmatch:
-            out    += "    mov byte [ds:bx], byte 0\n"
-            program = clearmatch.group(2)
+            substring = clearmatch.group(2)
+            value     = 2 * substring.count( '+' ) - len( substring )
+            out    += "    mov byte [ds:bx], byte %d\n" % ( value % 256 )
+            program = clearmatch.group(3)
             continue
         countersmatch = counters.match( program )
         if countersmatch:
             substring = countersmatch.group(1)
             value     = 2 * substring.count( '+' ) - len( substring )
-            out      += "    add byte [ds:bx], byte %d\n" % ( value % 256 )
+            if value != 0:
+                out      += "    add byte [ds:bx], byte %d\n" % ( value % 256 )
             program   = countersmatch.group(2)
             continue
         ptrmovementsmatch = ptrmovements.match( program )
         if ptrmovementsmatch:
             substring = ptrmovementsmatch.group(1)
             value     = 2 * substring.count( '>' ) - len( substring )
-            out      += "    add bx, %d\n" % value
+            if value != 0:
+                out      += "    add bx, %d\n" % value
             program   = ptrmovementsmatch.group(2)
             continue
         if program != "" and program[0] == "]":
@@ -54,7 +58,10 @@ def compile( program, depth=0 ):
         if program != "" and program[0] == ".":
             out    += "    mov al, byte [ds:bx]\n"
             out    += "    call putc\n"
-            program = program [1:]
+            program = program[1:]
+        if program != "" and program[0] == ",":
+            out    += "    call getc\n"
+            program = program[1:]
     return out
 
 parser = argparse.ArgumentParser()

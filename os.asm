@@ -7,8 +7,8 @@ bits 	16
 main:
 	mov ax, 0x1000
 	mov ds, ax
-	mov si, hello
-	call print
+	;; 	mov si, hello
+	;; 	call print
 
 	call execute
 	
@@ -40,8 +40,19 @@ dne:
 
 putc:				;puts a character in al onto the screen
 	mov ah, 0x0e
+	push bx
 	mov bx, 0
 	int 10h
+	pop bx
+	ret
+
+getc:
+	pusha
+	;; INT 0x16, AH=0x00 : read keypress
+	mov ah, 0x00
+	int 0x16
+	mov [bx], byte al
+	popa
 	ret
 
 abort:
@@ -57,7 +68,7 @@ abort:
 execute:
 	pusha
 	mov bx, tape
-	%include "bfcompiler/os.asm"
+	%include "oscode.asm"
 	popa
 	ret
 tape:	
