@@ -11,7 +11,7 @@ bfos.img: .FORCE
 	cat -n oscode.bf
 	@echo ""
 	python3 bfcompiler/compiler.py oscode.bf -o oscode.asm
-	cat -n oscode.asm
+#	cat -n oscode.asm
 	$(NASM) bfos.asm -f bin -o boot.img
 	$(NASM) os.asm -f bin -o os.img -l oslist.txt
 	cat boot.img os.img > bfos.img

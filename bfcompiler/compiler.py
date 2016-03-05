@@ -8,15 +8,17 @@ import re
 import argparse
 import os
 
-comments     = re.compile( "[^\[\]+-><.,]" )
+comments     = re.compile( "[^\[\]+\-><.,]" )
 counters     = re.compile( "([+-]+)(.*)" )
 ptrmovements = re.compile( "([<>]+)(.*)" )
 clear        = re.compile( "[+-]*(\[+\]+|\[-\])+([+-]*)(.*)" )
 
+
+loops = 0
 # Compiles a brainfuck program to assembly code
 def compile( program, depth=0 ):
+    global loops
     out = ""
-    loops = 0
     while len( program ) > 0:
         clearmatch = clear.match( program )
         if clearmatch:
@@ -44,8 +46,9 @@ def compile( program, depth=0 ):
         if program != "" and program[0] == "]":
             return (out, program[1:])
         if program != "" and program[0] == "[":
-            startlabel = "loop_start_%d_%d" % ( depth, loops )
-            endlabel   = "loop_ended_%d_%d" % ( depth, loops )
+            startlabel = "loop_start_%d" % loops
+            endlabel   = "loop_ended_%d" % loops
+            loops += 1
             out += "%s:\n" % startlabel
             out += "    mov al, byte [ds:bx]\n"
             out += "    or al, al\n"
@@ -54,7 +57,6 @@ def compile( program, depth=0 ):
             out += newout
             out += "    jmp %s\n" % startlabel
             out += "%s:\n" % endlabel
-            loops += 1
         if program != "" and program[0] == ".":
             out    += "    mov al, byte [ds:bx]\n"
             out    += "    call putc\n"
@@ -77,6 +79,6 @@ with open( args.input_file, "r" ) as in_file:
     program = comments.sub( "", in_file.read() )
 
 with open( args.output_file, "w" ) as out_file:
-    out_file.write( compile( program) )
+    out_file.write( compile( program ) )
 
 

@@ -7,8 +7,8 @@ bits 	16
 main:
 	mov ax, 0x1000
 	mov ds, ax
-	;; 	mov si, hello
-	;; 	call print
+	mov si, hello
+	call print
 
 	call execute
 	
@@ -61,7 +61,7 @@ abort:
 	cli
 	hlt
 
-	hello db "Hello, world!", 10, 13, 0
+	hello db "Execution started", 10, 13, 0
 	stopmsg db "Execution stopped.", 10, 13, 0
 	abrtmsg db "ERROR execution aborted", 10, 13, 0
 

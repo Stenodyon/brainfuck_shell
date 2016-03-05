@@ -7,56 +7,104 @@
 import argparse
 import re
 
-class RedefinitionError(Exception):
-    def __init__(self,name):
-        Exception.__init__(self,"Word already defined : %s" % name)
+tokens = (
+    "INT_LIT",
+    "STR_LIT",
+    "BFC_LIT",
+    "WORD"
+)
 
-class UnboundValueError(Exception):
-    def __init__(self,name):
-        Exception.__init__(self,"Unbound word : %s" % name)
+literals = [ ':', ';' ]
 
-new_word = re.compile( ":\s*(\w*)([^;]*);(.*)" )
-code     = re.compile( "([^:]*)(:.*|$)" )
-comments = re.compile( "[(][^)]*[)]" )
+t_INT_LIT = r'[0-9]+'
 
-instruction = {
-    "dup": "<<[->+>+<<]>>[-<<+>>]",
-    "swap": "<<[->>+<<]>[-<+>]>[-<+>]",
-    "+": "<[-<+>]",
-    "-": "<[-<->]",
-    ".": "<.[-]"
-}
+def t_STR_LIT(t):
+    '("[^"]*"|\'[^\']*\')'
+    t.value = t.value[1:-1]
+    return t
 
-def compileint( integer ):
-    out = "[-]"
-    for i in range( integer ):
-        out += "+"
-    return out + ">"
+def t_BFC_LIT(t):
+    '[{][^}]*[}]'
+    t.value = t.value[1:-1]
+    return t
 
-def compileword( word ):
-    try:
-        return compileint( int( word ) )
-    except:
-        if not word in instruction:
-            raise UnboundValueError( word ) 
-        return instruction[word]
+def t_WORD(t):
+    r'[^0-9\s:;{}][^\s:;{}]*'
+    return t
 
-def compile( program ):
+def t_error(t):
+    print( "Illegal character '%s'\r" % t.value[0], end="" )
+    t.lexer.skip(1)
+
+import ply.lex as lex
+lex.lex()
+
+instruction = {}
+
+def make_int( n ):
+    return "[-]" + "+" * n + ">"
+
+def p_program(p):
+    'program : definitions WORD'
+    p[0] = instruction[p[2]]
+
+def p_definitions(p):
+    'definitions : definitions definition'
+    pass
+
+def p_definitions_definition(p):
+    'definitions : definition'
+    pass
+
+def p_definition(p):
+    'definition : ":" WORD statement ";"'
+    instruction[p[2]] = p[3]
+
+def p_statement(p):
+    'statement : statement element'
+    p[0] = p[1] + p[2]
+
+def p_statement_word(p):
+    'statement : element'
+    p[0] = p[1]
+
+def p_element_word(p):
+    'element : WORD'
+    p[0] = instruction[p[1]]
+
+def p_element_int(p):
+    'element : INT_LIT'
+    p[0] = make_int( int( p[1] ) )
+
+def p_element_str(p):
+    'element : STR_LIT'
     out = ""
-    while( len( program ) > 0 ):
-        new_wordmatch = new_word.match( program )
-        if new_wordmatch:
-            word = new_wordmatch.group(1)
-            if word in instruction:
-                raise RedefinitionError(word)
-            instruction[word] = compile( new_wordmatch.group(2) )
-            program = new_wordmatch.group(3)
-        codematch = code.match( program )
-        if codematch:
-            words         = filter( None, codematch.group(1).split( " " ) )
-            compiledwords = map( compileword, words )
-            out          += "".join( compiledwords )
-            program       = codematch.group(2)
+    for c in p[1]:
+        out += make_int( ord( c ) )
+    p[0] = out
+
+# Brainfuck literal { code }
+def p_element_bfc(p):
+    'element : BFC_LIT'
+    p[0] = p[1]
+
+def p_error(p):
+    print( "Syntax error !" )
+    print( p )
+
+import ply.yacc as yacc
+parserlexer = yacc.yacc()
+
+def remove_comments( program ):
+    out = ""
+    parencount = 0
+    for c in program:
+        if c == "(":
+            parencount += 1
+        elif c == ")":
+            parencount -= 1
+        elif parencount == 0:
+            out += c
     return out
 
 parser = argparse.ArgumentParser()
@@ -69,7 +117,15 @@ if not args.output_file:
     ags.output_file = root + ".bf"
 
 with open( args.input_file, "r" ) as in_file:
-    program = comments.sub( "", in_file.read().replace( "\n", " " ) )
+    program = remove_comments( in_file.read().replace( "\n", " " ) )
+
+result = parserlexer.parse( program )
+
+fprogram = ""
+for i in range( len( result ) ):
+    fprogram += result[i]
+    if (i + 1) % 80 == 0:
+        fprogram += "\n"
 
 with open( args.output_file, "w" ) as out_file:
-    out_file.write( compile( program ) )
+    out_file.write( fprogram )

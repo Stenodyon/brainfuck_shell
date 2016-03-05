@@ -1,6 +1,6 @@
 	%define loc 0x1000
 	%define drive 0x80
-	%define os_sect 2o
+	%define os_sect 2
 
 org	 0x7c00			;Bootloaders are loaded at 0x7c0:0000
 

@@ -1,0 +1,188 @@
+Created by PLY version 3.4 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    BFC_LIT
+
+Grammar
+
+Rule 0     S' -> program
+Rule 1     program -> definitions WORD
+Rule 2     definitions -> definitions definition
+Rule 3     definitions -> definition
+Rule 4     definition -> : WORD statement ;
+Rule 5     statement -> statement element
+Rule 6     statement -> element
+Rule 7     element -> WORD
+Rule 8     element -> INT_LIT
+Rule 9     element -> STR_LIT
+
+Terminals, with rules where they appear
+
+:                    : 4
+;                    : 4
+BFC_LIT              : 
+INT_LIT              : 8
+STR_LIT              : 9
+WORD                 : 1 4 7
+error                : 
+
+Nonterminals, with rules where they appear
+
+definition           : 2 3
+definitions          : 1 2
+element              : 5 6
+program              : 0
+statement            : 4 5
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . program
+    (1) program -> . definitions WORD
+    (2) definitions -> . definitions definition
+    (3) definitions -> . definition
+    (4) definition -> . : WORD statement ;
+
+    :               shift and go to state 1
+
+    definitions                    shift and go to state 2
+    definition                     shift and go to state 3
+    program                        shift and go to state 4
+
+state 1
+
+    (4) definition -> : . WORD statement ;
+
+    WORD            shift and go to state 5
+
+
+state 2
+
+    (1) program -> definitions . WORD
+    (2) definitions -> definitions . definition
+    (4) definition -> . : WORD statement ;
+
+    WORD            shift and go to state 6
+    :               shift and go to state 1
+
+    definition                     shift and go to state 7
+
+state 3
+
+    (3) definitions -> definition .
+
+    WORD            reduce using rule 3 (definitions -> definition .)
+    :               reduce using rule 3 (definitions -> definition .)
+
+
+state 4
+
+    (0) S' -> program .
+
+
+
+state 5
+
+    (4) definition -> : WORD . statement ;
+    (5) statement -> . statement element
+    (6) statement -> . element
+    (7) element -> . WORD
+    (8) element -> . INT_LIT
+    (9) element -> . STR_LIT
+
+    WORD            shift and go to state 8
+    INT_LIT         shift and go to state 11
+    STR_LIT         shift and go to state 9
+
+    statement                      shift and go to state 10
+    element                        shift and go to state 12
+
+state 6
+
+    (1) program -> definitions WORD .
+
+    $end            reduce using rule 1 (program -> definitions WORD .)
+
+
+state 7
+
+    (2) definitions -> definitions definition .
+
+    WORD            reduce using rule 2 (definitions -> definitions definition .)
+    :               reduce using rule 2 (definitions -> definitions definition .)
+
+
+state 8
+
+    (7) element -> WORD .
+
+    ;               reduce using rule 7 (element -> WORD .)
+    WORD            reduce using rule 7 (element -> WORD .)
+    INT_LIT         reduce using rule 7 (element -> WORD .)
+    STR_LIT         reduce using rule 7 (element -> WORD .)
+
+
+state 9
+
+    (9) element -> STR_LIT .
+
+    ;               reduce using rule 9 (element -> STR_LIT .)
+    WORD            reduce using rule 9 (element -> STR_LIT .)
+    INT_LIT         reduce using rule 9 (element -> STR_LIT .)
+    STR_LIT         reduce using rule 9 (element -> STR_LIT .)
+
+
+state 10
+
+    (4) definition -> : WORD statement . ;
+    (5) statement -> statement . element
+    (7) element -> . WORD
+    (8) element -> . INT_LIT
+    (9) element -> . STR_LIT
+
+    ;               shift and go to state 14
+    WORD            shift and go to state 8
+    INT_LIT         shift and go to state 11
+    STR_LIT         shift and go to state 9
+
+    element                        shift and go to state 13
+
+state 11
+
+    (8) element -> INT_LIT .
+
+    ;               reduce using rule 8 (element -> INT_LIT .)
+    WORD            reduce using rule 8 (element -> INT_LIT .)
+    INT_LIT         reduce using rule 8 (element -> INT_LIT .)
+    STR_LIT         reduce using rule 8 (element -> INT_LIT .)
+
+
+state 12
+
+    (6) statement -> element .
+
+    ;               reduce using rule 6 (statement -> element .)
+    WORD            reduce using rule 6 (statement -> element .)
+    INT_LIT         reduce using rule 6 (statement -> element .)
+    STR_LIT         reduce using rule 6 (statement -> element .)
+
+
+state 13
+
+    (5) statement -> statement element .
+
+    ;               reduce using rule 5 (statement -> statement element .)
+    WORD            reduce using rule 5 (statement -> statement element .)
+    INT_LIT         reduce using rule 5 (statement -> statement element .)
+    STR_LIT         reduce using rule 5 (statement -> statement element .)
+
+
+state 14
+
+    (4) definition -> : WORD statement ; .
+
+    WORD            reduce using rule 4 (definition -> : WORD statement ; .)
+    :               reduce using rule 4 (definition -> : WORD statement ; .)
+
