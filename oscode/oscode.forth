@@ -65,7 +65,11 @@ else
     repeat2
 efi ;
 
-( !!!! TODO strcpy and strcmp )
+( !!!! TODO strcmp )
+
+: strcpy
+{< [[->>+[>]>+<<[<]<] >>[>]>[>]< [[->+<]<] <[<]<<]}
+{>>>[[-<<+>>]>]>>[[-<<<+>>>]>]<<<} ;
 
 : greet 0 "Hello, Stenodyon" 10 13
 "=" 80 repeat 10 13
@@ -84,5 +88,7 @@ wnz getc
     efi
 loop {-[+<-]>[>]} 10 13 ;
 
-: main greet 1 wnz 0 "stenodyon$ " print_string get_string print_string loop ;
+(: main greet 1 wnz 0 "stenodyon$ " print_string get_string print_string loop ;)
+: main 0 "test" strcpy print_string print_string ;
+
 main
