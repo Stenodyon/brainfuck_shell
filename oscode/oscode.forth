@@ -48,7 +48,7 @@
 : print_string {<[<]+>>} wnz . {>>} loop {-[+<-]} ;
 
 : repeat1 over {<<<[-]>--[[>]} dup {<[<]>-]>[-<+<+>>]<<[->>+<<]>[>]} ;
-: repeat
+: repeat2
 dup 0 = ife
     drop drop
 else
@@ -57,6 +57,12 @@ else
     else
         repeat1
     efi
+efi ;
+: repeat
+over 0 = ife
+    swap drop 1 swap repeat2 {<[<]>[->]}
+else
+    repeat2
 efi ;
 
 ( !!!! TODO strcpy and strcmp )
