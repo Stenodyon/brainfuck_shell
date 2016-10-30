@@ -35,6 +35,8 @@ class Interpreter:
                 self.prog += c
 
         self.debug = debug
+        if self.debug:
+            print("*** Program Start ***", file=sys.stderr)
 
     def _plus(self):
         self.mem[self.memptr] = ( self.mem[self.memptr] + 1 ) % self.cellsize
@@ -84,23 +86,35 @@ class Interpreter:
         self.mem[self.memptr] = c
 
     def memdump(self):
-        for value in self.mem:
-            print("%i " % value, end="", file=sys.stderr)
+        bot = self.memptr - 10
+        if bot < 0:
+            bot = 0
+        top = self.memptr + 10
+        if bot >= len(self.mem):
+            bot = len(self.mem) - 1
+        for value in self.mem[bot:top]:
+            print("{:02x} ".format(value), end="", file=sys.stderr)
         try:
-            print("|%i|%s" % (self.ic, self.prog[self.ic]), end="", file=sys.stderr)
+            print("| %i | %s " % (self.ic, self.prog[self.ic]), end="", file=sys.stderr)
         except:
             print("|%i" % self.ic, end="", file=sys.stderr)
+        length = 30
+        if bot == 0:
+            length = 3 * self.memptr
+        print("\n" + " " * length + "|", end="", file=sys.stderr)
+        """
         for i in range( len( self.mem ) ):
             char = " "
             if i == self.memptr:
                 char = "i"
             print(char + " ", end="", file=sys.stderr)
+        """
         print("\n", end="", file=sys.stderr)
 
     def run(self,max_iterations=None):
         if self.debug:
             def step():
-                #self.memdump()
+                self.memdump()
                 self.instruction[ self.prog[ self.ic ] ]()
                 self.ic += 1
         else:
@@ -142,6 +156,8 @@ if __name__ == "__main__":
         stdscr.clear()
         with open( "prog.bf", "r" ) as f:
             rawprog = f.read()
-        inter = Interpreter(rawprog, debug=True)
+        inter = Interpreter(rawprog, debug=False)
         inter.run()
+        stdscr.addstr("\n\nProgram terminated\n")
+        stdscr.getch();
     wrapper(main)

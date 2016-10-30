@@ -73,7 +73,7 @@
     67                                  
     68                                  execute:
     69 0000008B 60                      	pusha
-    70 0000008C BB[9407]                	mov bx, tape
+    70 0000008C BB[2F0B]                	mov bx, tape
     71                                  	%include "oscode.asm"
      1 0000008F 3EC60700            <1>     mov byte [ds:bx], byte 0
      2 00000093 83C301              <1>     add bx, 1
@@ -116,679 +116,1057 @@
     39 00000114 3EC6073D            <1>     mov byte [ds:bx], byte 61
     40 00000118 83C301              <1>     add bx, 1
     41 0000011B 3EC60750            <1>     mov byte [ds:bx], byte 80
-    42 0000011F 83C3FF              <1>     add bx, -1
-    43                              <1> loop_start_0:
-    44 00000122 3E8A07              <1>     mov al, byte [ds:bx]
-    45 00000125 08C0                <1>     or al, al
-    46 00000127 7417                <1>     jz loop_ended_0
-    47 00000129 3E8007FF            <1>     add byte [ds:bx], byte 255
-    48 0000012D 83C302              <1>     add bx, 2
-    49 00000130 3E800701            <1>     add byte [ds:bx], byte 1
-    50 00000134 83C301              <1>     add bx, 1
-    51 00000137 3E800701            <1>     add byte [ds:bx], byte 1
-    52 0000013B 83C3FD              <1>     add bx, -3
-    53 0000013E EBE2                <1>     jmp loop_start_0
-    54                              <1> loop_ended_0:
-    55 00000140 83C303              <1>     add bx, 3
-    56                              <1> loop_start_1:
-    57 00000143 3E8A07              <1>     mov al, byte [ds:bx]
-    58 00000146 08C0                <1>     or al, al
-    59 00000148 7410                <1>     jz loop_ended_1
-    60 0000014A 3E8007FF            <1>     add byte [ds:bx], byte 255
-    61 0000014E 83C3FD              <1>     add bx, -3
-    62 00000151 3E800701            <1>     add byte [ds:bx], byte 1
-    63 00000155 83C303              <1>     add bx, 3
-    64 00000158 EBE9                <1>     jmp loop_start_1
-    65                              <1> loop_ended_1:
-    66 0000015A 83C3FD              <1>     add bx, -3
-    67 0000015D 3EC60700            <1>     mov byte [ds:bx], byte 0
-    68 00000161 83C301              <1>     add bx, 1
-    69                              <1> loop_start_2:
-    70 00000164 3E8A07              <1>     mov al, byte [ds:bx]
-    71 00000167 08C0                <1>     or al, al
-    72 00000169 745F                <1>     jz loop_ended_2
-    73 0000016B 3E8007FF            <1>     add byte [ds:bx], byte 255
-    74                              <1> loop_start_3:
-    75 0000016F 3E8A07              <1>     mov al, byte [ds:bx]
-    76 00000172 08C0                <1>     or al, al
-    77 00000174 7405                <1>     jz loop_ended_3
-    78 00000176 83C301              <1>     add bx, 1
-    79 00000179 EBF4                <1>     jmp loop_start_3
-    80                              <1> loop_ended_3:
-    81 0000017B 83C3FF              <1>     add bx, -1
-    82                              <1> loop_start_4:
-    83 0000017E 3E8A07              <1>     mov al, byte [ds:bx]
-    84 00000181 08C0                <1>     or al, al
-    85 00000183 7417                <1>     jz loop_ended_4
-    86 00000185 3E8007FF            <1>     add byte [ds:bx], byte 255
-    87 00000189 83C301              <1>     add bx, 1
-    88 0000018C 3E800701            <1>     add byte [ds:bx], byte 1
-    89 00000190 83C301              <1>     add bx, 1
-    90 00000193 3E800701            <1>     add byte [ds:bx], byte 1
-    91 00000197 83C3FE              <1>     add bx, -2
-    92 0000019A EBE2                <1>     jmp loop_start_4
-    93                              <1> loop_ended_4:
-    94 0000019C 83C302              <1>     add bx, 2
-    95                              <1> loop_start_5:
-    96 0000019F 3E8A07              <1>     mov al, byte [ds:bx]
-    97 000001A2 08C0                <1>     or al, al
-    98 000001A4 7410                <1>     jz loop_ended_5
-    99 000001A6 3E8007FF            <1>     add byte [ds:bx], byte 255
-   100 000001AA 83C3FE              <1>     add bx, -2
-   101 000001AD 3E800701            <1>     add byte [ds:bx], byte 1
-   102 000001B1 83C302              <1>     add bx, 2
-   103 000001B4 EBE9                <1>     jmp loop_start_5
-   104                              <1> loop_ended_5:
-   105 000001B6 83C3FF              <1>     add bx, -1
-   106                              <1> loop_start_6:
-   107 000001B9 3E8A07              <1>     mov al, byte [ds:bx]
-   108 000001BC 08C0                <1>     or al, al
-   109 000001BE 7405                <1>     jz loop_ended_6
-   110 000001C0 83C3FF              <1>     add bx, -1
-   111 000001C3 EBF4                <1>     jmp loop_start_6
-   112                              <1> loop_ended_6:
-   113 000001C5 83C301              <1>     add bx, 1
-   114 000001C8 EB9A                <1>     jmp loop_start_2
-   115                              <1> loop_ended_2:
-   116 000001CA 83C301              <1>     add bx, 1
-   117                              <1> loop_start_7:
-   118 000001CD 3E8A07              <1>     mov al, byte [ds:bx]
-   119 000001D0 08C0                <1>     or al, al
-   120 000001D2 7405                <1>     jz loop_ended_7
-   121 000001D4 83C301              <1>     add bx, 1
-   122 000001D7 EBF4                <1>     jmp loop_start_7
-   123                              <1> loop_ended_7:
-   124 000001D9 3EC6070A            <1>     mov byte [ds:bx], byte 10
-   125 000001DD 83C301              <1>     add bx, 1
-   126 000001E0 3EC6070D            <1>     mov byte [ds:bx], byte 13
-   127                              <1> loop_start_8:
-   128 000001E4 3E8A07              <1>     mov al, byte [ds:bx]
-   129 000001E7 08C0                <1>     or al, al
-   130 000001E9 7405                <1>     jz loop_ended_8
-   131 000001EB 83C3FF              <1>     add bx, -1
-   132 000001EE EBF4                <1>     jmp loop_start_8
-   133                              <1> loop_ended_8:
-   134 000001F0 3E800701            <1>     add byte [ds:bx], byte 1
-   135 000001F4 83C301              <1>     add bx, 1
-   136                              <1> loop_start_9:
-   137 000001F7 3E8A07              <1>     mov al, byte [ds:bx]
-   138 000001FA 08C0                <1>     or al, al
-   139 000001FC 740F                <1>     jz loop_ended_9
-   140 000001FE 3E8A07              <1>     mov al, byte [ds:bx]
-   141 00000201 E829FE              <1>     call putc
-   142 00000204 3EC60700            <1>     mov byte [ds:bx], byte 0
-   143 00000208 83C301              <1>     add bx, 1
-   144 0000020B EBEA                <1>     jmp loop_start_9
-   145                              <1> loop_ended_9:
-   146 0000020D 3E8007FF            <1>     add byte [ds:bx], byte 255
-   147                              <1> loop_start_10:
-   148 00000211 3E8A07              <1>     mov al, byte [ds:bx]
-   149 00000214 08C0                <1>     or al, al
-   150 00000216 740D                <1>     jz loop_ended_10
-   151 00000218 3E800701            <1>     add byte [ds:bx], byte 1
-   152 0000021C 83C3FF              <1>     add bx, -1
-   153 0000021F 3E8007FF            <1>     add byte [ds:bx], byte 255
-   154 00000223 EBEC                <1>     jmp loop_start_10
-   155                              <1> loop_ended_10:
-   156 00000225 83C3FF              <1>     add bx, -1
-   157                              <1> loop_start_11:
-   158 00000228 3E8A07              <1>     mov al, byte [ds:bx]
-   159 0000022B 08C0                <1>     or al, al
-   160 0000022D 7405                <1>     jz loop_ended_11
-   161 0000022F 83C3FF              <1>     add bx, -1
-   162 00000232 EBF4                <1>     jmp loop_start_11
-   163                              <1> loop_ended_11:
-   164 00000234 3E800701            <1>     add byte [ds:bx], byte 1
-   165 00000238 83C301              <1>     add bx, 1
-   166                              <1> loop_start_12:
-   167 0000023B 3E8A07              <1>     mov al, byte [ds:bx]
-   168 0000023E 08C0                <1>     or al, al
-   169 00000240 740F                <1>     jz loop_ended_12
-   170 00000242 3E8A07              <1>     mov al, byte [ds:bx]
-   171 00000245 E8E5FD              <1>     call putc
-   172 00000248 3EC60700            <1>     mov byte [ds:bx], byte 0
-   173 0000024C 83C301              <1>     add bx, 1
-   174 0000024F EBEA                <1>     jmp loop_start_12
-   175                              <1> loop_ended_12:
-   176 00000251 3E8007FF            <1>     add byte [ds:bx], byte 255
-   177                              <1> loop_start_13:
-   178 00000255 3E8A07              <1>     mov al, byte [ds:bx]
-   179 00000258 08C0                <1>     or al, al
-   180 0000025A 740D                <1>     jz loop_ended_13
-   181 0000025C 3E800701            <1>     add byte [ds:bx], byte 1
-   182 00000260 83C3FF              <1>     add bx, -1
-   183 00000263 3E8007FF            <1>     add byte [ds:bx], byte 255
-   184 00000267 EBEC                <1>     jmp loop_start_13
-   185                              <1> loop_ended_13:
-   186 00000269 3EC60701            <1>     mov byte [ds:bx], byte 1
-   187                              <1> loop_start_14:
-   188 0000026D 3E8A07              <1>     mov al, byte [ds:bx]
-   189 00000270 08C0                <1>     or al, al
-   190 00000272 0F841C05            <1>     jz loop_ended_14
-   191 00000276 83C301              <1>     add bx, 1
-   192 00000279 3EC60700            <1>     mov byte [ds:bx], byte 0
-   193 0000027D 83C301              <1>     add bx, 1
-   194 00000280 3EC60773            <1>     mov byte [ds:bx], byte 115
-   195 00000284 83C301              <1>     add bx, 1
-   196 00000287 3EC60774            <1>     mov byte [ds:bx], byte 116
-   197 0000028B 83C301              <1>     add bx, 1
-   198 0000028E 3EC60765            <1>     mov byte [ds:bx], byte 101
-   199 00000292 83C301              <1>     add bx, 1
-   200 00000295 3EC6076E            <1>     mov byte [ds:bx], byte 110
-   201 00000299 83C301              <1>     add bx, 1
-   202 0000029C 3EC6076F            <1>     mov byte [ds:bx], byte 111
-   203 000002A0 83C301              <1>     add bx, 1
-   204 000002A3 3EC60764            <1>     mov byte [ds:bx], byte 100
-   205 000002A7 83C301              <1>     add bx, 1
-   206 000002AA 3EC60779            <1>     mov byte [ds:bx], byte 121
-   207 000002AE 83C301              <1>     add bx, 1
-   208 000002B1 3EC6076F            <1>     mov byte [ds:bx], byte 111
-   209 000002B5 83C301              <1>     add bx, 1
-   210 000002B8 3EC6076E            <1>     mov byte [ds:bx], byte 110
-   211 000002BC 83C301              <1>     add bx, 1
-   212 000002BF 3EC60724            <1>     mov byte [ds:bx], byte 36
-   213 000002C3 83C301              <1>     add bx, 1
-   214 000002C6 3EC60720            <1>     mov byte [ds:bx], byte 32
-   215                              <1> loop_start_15:
-   216 000002CA 3E8A07              <1>     mov al, byte [ds:bx]
-   217 000002CD 08C0                <1>     or al, al
-   218 000002CF 7405                <1>     jz loop_ended_15
-   219 000002D1 83C3FF              <1>     add bx, -1
-   220 000002D4 EBF4                <1>     jmp loop_start_15
-   221                              <1> loop_ended_15:
-   222 000002D6 3E800701            <1>     add byte [ds:bx], byte 1
-   223 000002DA 83C301              <1>     add bx, 1
-   224                              <1> loop_start_16:
-   225 000002DD 3E8A07              <1>     mov al, byte [ds:bx]
-   226 000002E0 08C0                <1>     or al, al
-   227 000002E2 740F                <1>     jz loop_ended_16
-   228 000002E4 3E8A07              <1>     mov al, byte [ds:bx]
-   229 000002E7 E843FD              <1>     call putc
-   230 000002EA 3EC60700            <1>     mov byte [ds:bx], byte 0
-   231 000002EE 83C301              <1>     add bx, 1
-   232 000002F1 EBEA                <1>     jmp loop_start_16
-   233                              <1> loop_ended_16:
-   234 000002F3 3E8007FF            <1>     add byte [ds:bx], byte 255
-   235                              <1> loop_start_17:
-   236 000002F7 3E8A07              <1>     mov al, byte [ds:bx]
-   237 000002FA 08C0                <1>     or al, al
-   238 000002FC 740D                <1>     jz loop_ended_17
-   239 000002FE 3E800701            <1>     add byte [ds:bx], byte 1
-   240 00000302 83C3FF              <1>     add bx, -1
-   241 00000305 3E8007FF            <1>     add byte [ds:bx], byte 255
-   242 00000309 EBEC                <1>     jmp loop_start_17
-   243                              <1> loop_ended_17:
-   244 0000030B 3EC60701            <1>     mov byte [ds:bx], byte 1
-   245                              <1> loop_start_18:
-   246 0000030F 3E8A07              <1>     mov al, byte [ds:bx]
-   247 00000312 08C0                <1>     or al, al
-   248 00000314 0F840104            <1>     jz loop_ended_18
-   249 00000318 83C301              <1>     add bx, 1
-   250 0000031B E819FD              <1>     call getc
-   251                              <1> loop_start_19:
-   252 0000031E 3E8A07              <1>     mov al, byte [ds:bx]
-   253 00000321 08C0                <1>     or al, al
-   254 00000323 7417                <1>     jz loop_ended_19
-   255 00000325 3E8007FF            <1>     add byte [ds:bx], byte 255
-   256 00000329 83C301              <1>     add bx, 1
-   257 0000032C 3E800701            <1>     add byte [ds:bx], byte 1
-   258 00000330 83C301              <1>     add bx, 1
-   259 00000333 3E800701            <1>     add byte [ds:bx], byte 1
-   260 00000337 83C3FE              <1>     add bx, -2
-   261 0000033A EBE2                <1>     jmp loop_start_19
-   262                              <1> loop_ended_19:
-   263 0000033C 83C302              <1>     add bx, 2
-   264                              <1> loop_start_20:
-   265 0000033F 3E8A07              <1>     mov al, byte [ds:bx]
-   266 00000342 08C0                <1>     or al, al
-   267 00000344 7410                <1>     jz loop_ended_20
-   268 00000346 3E8007FF            <1>     add byte [ds:bx], byte 255
-   269 0000034A 83C3FE              <1>     add bx, -2
-   270 0000034D 3E800701            <1>     add byte [ds:bx], byte 1
-   271 00000351 83C302              <1>     add bx, 2
-   272 00000354 EBE9                <1>     jmp loop_start_20
-   273                              <1> loop_ended_20:
-   274 00000356 3EC60708            <1>     mov byte [ds:bx], byte 8
-   275                              <1> loop_start_21:
-   276 0000035A 3E8A07              <1>     mov al, byte [ds:bx]
-   277 0000035D 08C0                <1>     or al, al
-   278 0000035F 7410                <1>     jz loop_ended_21
-   279 00000361 3E8007FF            <1>     add byte [ds:bx], byte 255
-   280 00000365 83C3FF              <1>     add bx, -1
-   281 00000368 3E8007FF            <1>     add byte [ds:bx], byte 255
-   282 0000036C 83C301              <1>     add bx, 1
-   283 0000036F EBE9                <1>     jmp loop_start_21
-   284                              <1> loop_ended_21:
-   285 00000371 83C3FF              <1>     add bx, -1
-   286                              <1> loop_start_22:
-   287 00000374 3E8A07              <1>     mov al, byte [ds:bx]
-   288 00000377 08C0                <1>     or al, al
-   289 00000379 7410                <1>     jz loop_ended_22
-   290 0000037B 83C301              <1>     add bx, 1
-   291 0000037E 3E800701            <1>     add byte [ds:bx], byte 1
-   292 00000382 83C3FF              <1>     add bx, -1
-   293 00000385 3EC60700            <1>     mov byte [ds:bx], byte 0
-   294 00000389 EBE9                <1>     jmp loop_start_22
-   295                              <1> loop_ended_22:
-   296 0000038B 3E800701            <1>     add byte [ds:bx], byte 1
-   297 0000038F 83C301              <1>     add bx, 1
-   298                              <1> loop_start_23:
-   299 00000392 3E8A07              <1>     mov al, byte [ds:bx]
-   300 00000395 08C0                <1>     or al, al
-   301 00000397 7410                <1>     jz loop_ended_23
-   302 00000399 83C3FF              <1>     add bx, -1
-   303 0000039C 3E8007FF            <1>     add byte [ds:bx], byte 255
-   304 000003A0 83C301              <1>     add bx, 1
-   305 000003A3 3E8007FF            <1>     add byte [ds:bx], byte 255
-   306 000003A7 EBE9                <1>     jmp loop_start_23
-   307                              <1> loop_ended_23:
-   308 000003A9 83C3FF              <1>     add bx, -1
-   309                              <1> loop_start_24:
-   310 000003AC 3E8A07              <1>     mov al, byte [ds:bx]
-   311 000003AF 08C0                <1>     or al, al
-   312 000003B1 7417                <1>     jz loop_ended_24
-   313 000003B3 3E8007FF            <1>     add byte [ds:bx], byte 255
-   314 000003B7 83C301              <1>     add bx, 1
-   315 000003BA 3E800701            <1>     add byte [ds:bx], byte 1
+    42                              <1> loop_start_0:
+    43 0000011F 3E8A07              <1>     mov al, byte [ds:bx]
+    44 00000122 08C0                <1>     or al, al
+    45 00000124 7417                <1>     jz loop_ended_0
+    46 00000126 3E8007FF            <1>     add byte [ds:bx], byte 255
+    47 0000012A 83C301              <1>     add bx, 1
+    48 0000012D 3E800701            <1>     add byte [ds:bx], byte 1
+    49 00000131 83C301              <1>     add bx, 1
+    50 00000134 3E800701            <1>     add byte [ds:bx], byte 1
+    51 00000138 83C3FE              <1>     add bx, -2
+    52 0000013B EBE2                <1>     jmp loop_start_0
+    53                              <1> loop_ended_0:
+    54 0000013D 83C302              <1>     add bx, 2
+    55                              <1> loop_start_1:
+    56 00000140 3E8A07              <1>     mov al, byte [ds:bx]
+    57 00000143 08C0                <1>     or al, al
+    58 00000145 7410                <1>     jz loop_ended_1
+    59 00000147 3E8007FF            <1>     add byte [ds:bx], byte 255
+    60 0000014B 83C3FE              <1>     add bx, -2
+    61 0000014E 3E800701            <1>     add byte [ds:bx], byte 1
+    62 00000152 83C302              <1>     add bx, 2
+    63 00000155 EBE9                <1>     jmp loop_start_1
+    64                              <1> loop_ended_1:
+    65 00000157 3EC60700            <1>     mov byte [ds:bx], byte 0
+    66                              <1> loop_start_2:
+    67 0000015B 3E8A07              <1>     mov al, byte [ds:bx]
+    68 0000015E 08C0                <1>     or al, al
+    69 00000160 7410                <1>     jz loop_ended_2
+    70 00000162 3E8007FF            <1>     add byte [ds:bx], byte 255
+    71 00000166 83C3FF              <1>     add bx, -1
+    72 00000169 3E8007FF            <1>     add byte [ds:bx], byte 255
+    73 0000016D 83C301              <1>     add bx, 1
+    74 00000170 EBE9                <1>     jmp loop_start_2
+    75                              <1> loop_ended_2:
+    76 00000172 83C3FF              <1>     add bx, -1
+    77                              <1> loop_start_3:
+    78 00000175 3E8A07              <1>     mov al, byte [ds:bx]
+    79 00000178 08C0                <1>     or al, al
+    80 0000017A 7410                <1>     jz loop_ended_3
+    81 0000017C 83C301              <1>     add bx, 1
+    82 0000017F 3E800701            <1>     add byte [ds:bx], byte 1
+    83 00000183 83C3FF              <1>     add bx, -1
+    84 00000186 3EC60700            <1>     mov byte [ds:bx], byte 0
+    85 0000018A EBE9                <1>     jmp loop_start_3
+    86                              <1> loop_ended_3:
+    87 0000018C 3E800701            <1>     add byte [ds:bx], byte 1
+    88 00000190 83C301              <1>     add bx, 1
+    89                              <1> loop_start_4:
+    90 00000193 3E8A07              <1>     mov al, byte [ds:bx]
+    91 00000196 08C0                <1>     or al, al
+    92 00000198 7410                <1>     jz loop_ended_4
+    93 0000019A 83C3FF              <1>     add bx, -1
+    94 0000019D 3E8007FF            <1>     add byte [ds:bx], byte 255
+    95 000001A1 83C301              <1>     add bx, 1
+    96 000001A4 3E8007FF            <1>     add byte [ds:bx], byte 255
+    97 000001A8 EBE9                <1>     jmp loop_start_4
+    98                              <1> loop_ended_4:
+    99 000001AA 83C3FF              <1>     add bx, -1
+   100                              <1> loop_start_5:
+   101 000001AD 3E8A07              <1>     mov al, byte [ds:bx]
+   102 000001B0 08C0                <1>     or al, al
+   103 000001B2 7417                <1>     jz loop_ended_5
+   104 000001B4 3E8007FF            <1>     add byte [ds:bx], byte 255
+   105 000001B8 83C301              <1>     add bx, 1
+   106 000001BB 3E800701            <1>     add byte [ds:bx], byte 1
+   107 000001BF 83C301              <1>     add bx, 1
+   108 000001C2 3E800701            <1>     add byte [ds:bx], byte 1
+   109 000001C6 83C3FE              <1>     add bx, -2
+   110 000001C9 EBE2                <1>     jmp loop_start_5
+   111                              <1> loop_ended_5:
+   112 000001CB 83C302              <1>     add bx, 2
+   113                              <1> loop_start_6:
+   114 000001CE 3E8A07              <1>     mov al, byte [ds:bx]
+   115 000001D1 08C0                <1>     or al, al
+   116 000001D3 7410                <1>     jz loop_ended_6
+   117 000001D5 3E8007FF            <1>     add byte [ds:bx], byte 255
+   118 000001D9 83C3FE              <1>     add bx, -2
+   119 000001DC 3E800701            <1>     add byte [ds:bx], byte 1
+   120 000001E0 83C302              <1>     add bx, 2
+   121 000001E3 EBE9                <1>     jmp loop_start_6
+   122                              <1> loop_ended_6:
+   123 000001E5 83C3FF              <1>     add bx, -1
+   124                              <1> loop_start_7:
+   125 000001E8 3E8A07              <1>     mov al, byte [ds:bx]
+   126 000001EB 08C0                <1>     or al, al
+   127 000001ED 7410                <1>     jz loop_ended_7
+   128 000001EF 83C301              <1>     add bx, 1
+   129 000001F2 3E800701            <1>     add byte [ds:bx], byte 1
+   130 000001F6 83C3FF              <1>     add bx, -1
+   131 000001F9 3EC60700            <1>     mov byte [ds:bx], byte 0
+   132 000001FD EBE9                <1>     jmp loop_start_7
+   133                              <1> loop_ended_7:
+   134 000001FF 3E800701            <1>     add byte [ds:bx], byte 1
+   135 00000203 83C301              <1>     add bx, 1
+   136                              <1> loop_start_8:
+   137 00000206 3E8A07              <1>     mov al, byte [ds:bx]
+   138 00000209 08C0                <1>     or al, al
+   139 0000020B 7410                <1>     jz loop_ended_8
+   140 0000020D 83C3FF              <1>     add bx, -1
+   141 00000210 3E8007FF            <1>     add byte [ds:bx], byte 255
+   142 00000214 83C301              <1>     add bx, 1
+   143 00000217 3E8007FF            <1>     add byte [ds:bx], byte 255
+   144 0000021B EBE9                <1>     jmp loop_start_8
+   145                              <1> loop_ended_8:
+   146 0000021D 83C3FE              <1>     add bx, -2
+   147                              <1> loop_start_9:
+   148 00000220 3E8A07              <1>     mov al, byte [ds:bx]
+   149 00000223 08C0                <1>     or al, al
+   150 00000225 7410                <1>     jz loop_ended_9
+   151 00000227 3E8007FF            <1>     add byte [ds:bx], byte 255
+   152 0000022B 83C302              <1>     add bx, 2
+   153 0000022E 3E800701            <1>     add byte [ds:bx], byte 1
+   154 00000232 83C3FE              <1>     add bx, -2
+   155 00000235 EBE9                <1>     jmp loop_start_9
+   156                              <1> loop_ended_9:
+   157 00000237 83C301              <1>     add bx, 1
+   158                              <1> loop_start_10:
+   159 0000023A 3E8A07              <1>     mov al, byte [ds:bx]
+   160 0000023D 08C0                <1>     or al, al
+   161 0000023F 7410                <1>     jz loop_ended_10
+   162 00000241 3E8007FF            <1>     add byte [ds:bx], byte 255
+   163 00000245 83C3FF              <1>     add bx, -1
+   164 00000248 3E800701            <1>     add byte [ds:bx], byte 1
+   165 0000024C 83C301              <1>     add bx, 1
+   166 0000024F EBE9                <1>     jmp loop_start_10
+   167                              <1> loop_ended_10:
+   168 00000251 83C301              <1>     add bx, 1
+   169                              <1> loop_start_11:
+   170 00000254 3E8A07              <1>     mov al, byte [ds:bx]
+   171 00000257 08C0                <1>     or al, al
+   172 00000259 7410                <1>     jz loop_ended_11
+   173 0000025B 3E8007FF            <1>     add byte [ds:bx], byte 255
+   174 0000025F 83C3FF              <1>     add bx, -1
+   175 00000262 3E800701            <1>     add byte [ds:bx], byte 1
+   176 00000266 83C301              <1>     add bx, 1
+   177 00000269 EBE9                <1>     jmp loop_start_11
+   178                              <1> loop_ended_11:
+   179 0000026B 83C3FF              <1>     add bx, -1
+   180                              <1> loop_start_12:
+   181 0000026E 3E8A07              <1>     mov al, byte [ds:bx]
+   182 00000271 08C0                <1>     or al, al
+   183 00000273 741E                <1>     jz loop_ended_12
+   184 00000275 3EC60700            <1>     mov byte [ds:bx], byte 0
+   185 00000279 83C3FF              <1>     add bx, -1
+   186 0000027C 3EC60700            <1>     mov byte [ds:bx], byte 0
+   187 00000280 83C3FF              <1>     add bx, -1
+   188 00000283 3EC60700            <1>     mov byte [ds:bx], byte 0
+   189 00000287 83C3FF              <1>     add bx, -1
+   190 0000028A 3EC60700            <1>     mov byte [ds:bx], byte 0
+   191 0000028E 83C301              <1>     add bx, 1
+   192 00000291 EBDB                <1>     jmp loop_start_12
+   193                              <1> loop_ended_12:
+   194 00000293 83C3FF              <1>     add bx, -1
+   195                              <1> loop_start_13:
+   196 00000296 3E8A07              <1>     mov al, byte [ds:bx]
+   197 00000299 08C0                <1>     or al, al
+   198 0000029B 0F84D502            <1>     jz loop_ended_13
+   199 0000029F 3EC60700            <1>     mov byte [ds:bx], byte 0
+   200 000002A3 83C3FF              <1>     add bx, -1
+   201                              <1> loop_start_14:
+   202 000002A6 3E8A07              <1>     mov al, byte [ds:bx]
+   203 000002A9 08C0                <1>     or al, al
+   204 000002AB 7417                <1>     jz loop_ended_14
+   205 000002AD 3E8007FF            <1>     add byte [ds:bx], byte 255
+   206 000002B1 83C301              <1>     add bx, 1
+   207 000002B4 3E800701            <1>     add byte [ds:bx], byte 1
+   208 000002B8 83C301              <1>     add bx, 1
+   209 000002BB 3E800701            <1>     add byte [ds:bx], byte 1
+   210 000002BF 83C3FE              <1>     add bx, -2
+   211 000002C2 EBE2                <1>     jmp loop_start_14
+   212                              <1> loop_ended_14:
+   213 000002C4 83C302              <1>     add bx, 2
+   214                              <1> loop_start_15:
+   215 000002C7 3E8A07              <1>     mov al, byte [ds:bx]
+   216 000002CA 08C0                <1>     or al, al
+   217 000002CC 7410                <1>     jz loop_ended_15
+   218 000002CE 3E8007FF            <1>     add byte [ds:bx], byte 255
+   219 000002D2 83C3FE              <1>     add bx, -2
+   220 000002D5 3E800701            <1>     add byte [ds:bx], byte 1
+   221 000002D9 83C302              <1>     add bx, 2
+   222 000002DC EBE9                <1>     jmp loop_start_15
+   223                              <1> loop_ended_15:
+   224 000002DE 3EC60701            <1>     mov byte [ds:bx], byte 1
+   225                              <1> loop_start_16:
+   226 000002E2 3E8A07              <1>     mov al, byte [ds:bx]
+   227 000002E5 08C0                <1>     or al, al
+   228 000002E7 7410                <1>     jz loop_ended_16
+   229 000002E9 3E8007FF            <1>     add byte [ds:bx], byte 255
+   230 000002ED 83C3FF              <1>     add bx, -1
+   231 000002F0 3E8007FF            <1>     add byte [ds:bx], byte 255
+   232 000002F4 83C301              <1>     add bx, 1
+   233 000002F7 EBE9                <1>     jmp loop_start_16
+   234                              <1> loop_ended_16:
+   235 000002F9 83C3FF              <1>     add bx, -1
+   236                              <1> loop_start_17:
+   237 000002FC 3E8A07              <1>     mov al, byte [ds:bx]
+   238 000002FF 08C0                <1>     or al, al
+   239 00000301 7410                <1>     jz loop_ended_17
+   240 00000303 83C301              <1>     add bx, 1
+   241 00000306 3E800701            <1>     add byte [ds:bx], byte 1
+   242 0000030A 83C3FF              <1>     add bx, -1
+   243 0000030D 3EC60700            <1>     mov byte [ds:bx], byte 0
+   244 00000311 EBE9                <1>     jmp loop_start_17
+   245                              <1> loop_ended_17:
+   246 00000313 3E800701            <1>     add byte [ds:bx], byte 1
+   247 00000317 83C301              <1>     add bx, 1
+   248                              <1> loop_start_18:
+   249 0000031A 3E8A07              <1>     mov al, byte [ds:bx]
+   250 0000031D 08C0                <1>     or al, al
+   251 0000031F 7410                <1>     jz loop_ended_18
+   252 00000321 83C3FF              <1>     add bx, -1
+   253 00000324 3E8007FF            <1>     add byte [ds:bx], byte 255
+   254 00000328 83C301              <1>     add bx, 1
+   255 0000032B 3E8007FF            <1>     add byte [ds:bx], byte 255
+   256 0000032F EBE9                <1>     jmp loop_start_18
+   257                              <1> loop_ended_18:
+   258 00000331 83C3FF              <1>     add bx, -1
+   259                              <1> loop_start_19:
+   260 00000334 3E8A07              <1>     mov al, byte [ds:bx]
+   261 00000337 08C0                <1>     or al, al
+   262 00000339 7417                <1>     jz loop_ended_19
+   263 0000033B 3E8007FF            <1>     add byte [ds:bx], byte 255
+   264 0000033F 83C301              <1>     add bx, 1
+   265 00000342 3E800701            <1>     add byte [ds:bx], byte 1
+   266 00000346 83C301              <1>     add bx, 1
+   267 00000349 3E800701            <1>     add byte [ds:bx], byte 1
+   268 0000034D 83C3FE              <1>     add bx, -2
+   269 00000350 EBE2                <1>     jmp loop_start_19
+   270                              <1> loop_ended_19:
+   271 00000352 83C302              <1>     add bx, 2
+   272                              <1> loop_start_20:
+   273 00000355 3E8A07              <1>     mov al, byte [ds:bx]
+   274 00000358 08C0                <1>     or al, al
+   275 0000035A 7410                <1>     jz loop_ended_20
+   276 0000035C 3E8007FF            <1>     add byte [ds:bx], byte 255
+   277 00000360 83C3FE              <1>     add bx, -2
+   278 00000363 3E800701            <1>     add byte [ds:bx], byte 1
+   279 00000367 83C302              <1>     add bx, 2
+   280 0000036A EBE9                <1>     jmp loop_start_20
+   281                              <1> loop_ended_20:
+   282 0000036C 83C3FF              <1>     add bx, -1
+   283                              <1> loop_start_21:
+   284 0000036F 3E8A07              <1>     mov al, byte [ds:bx]
+   285 00000372 08C0                <1>     or al, al
+   286 00000374 7410                <1>     jz loop_ended_21
+   287 00000376 83C301              <1>     add bx, 1
+   288 00000379 3E800701            <1>     add byte [ds:bx], byte 1
+   289 0000037D 83C3FF              <1>     add bx, -1
+   290 00000380 3EC60700            <1>     mov byte [ds:bx], byte 0
+   291 00000384 EBE9                <1>     jmp loop_start_21
+   292                              <1> loop_ended_21:
+   293 00000386 3E800701            <1>     add byte [ds:bx], byte 1
+   294 0000038A 83C301              <1>     add bx, 1
+   295                              <1> loop_start_22:
+   296 0000038D 3E8A07              <1>     mov al, byte [ds:bx]
+   297 00000390 08C0                <1>     or al, al
+   298 00000392 7410                <1>     jz loop_ended_22
+   299 00000394 83C3FF              <1>     add bx, -1
+   300 00000397 3E8007FF            <1>     add byte [ds:bx], byte 255
+   301 0000039B 83C301              <1>     add bx, 1
+   302 0000039E 3E8007FF            <1>     add byte [ds:bx], byte 255
+   303 000003A2 EBE9                <1>     jmp loop_start_22
+   304                              <1> loop_ended_22:
+   305 000003A4 83C3FE              <1>     add bx, -2
+   306                              <1> loop_start_23:
+   307 000003A7 3E8A07              <1>     mov al, byte [ds:bx]
+   308 000003AA 08C0                <1>     or al, al
+   309 000003AC 7410                <1>     jz loop_ended_23
+   310 000003AE 3E8007FF            <1>     add byte [ds:bx], byte 255
+   311 000003B2 83C302              <1>     add bx, 2
+   312 000003B5 3E800701            <1>     add byte [ds:bx], byte 1
+   313 000003B9 83C3FE              <1>     add bx, -2
+   314 000003BC EBE9                <1>     jmp loop_start_23
+   315                              <1> loop_ended_23:
    316 000003BE 83C301              <1>     add bx, 1
-   317 000003C1 3E800701            <1>     add byte [ds:bx], byte 1
-   318 000003C5 83C3FE              <1>     add bx, -2
-   319 000003C8 EBE2                <1>     jmp loop_start_24
-   320                              <1> loop_ended_24:
-   321 000003CA 83C302              <1>     add bx, 2
-   322                              <1> loop_start_25:
-   323 000003CD 3E8A07              <1>     mov al, byte [ds:bx]
-   324 000003D0 08C0                <1>     or al, al
-   325 000003D2 7410                <1>     jz loop_ended_25
-   326 000003D4 3E8007FF            <1>     add byte [ds:bx], byte 255
-   327 000003D8 83C3FE              <1>     add bx, -2
-   328 000003DB 3E800701            <1>     add byte [ds:bx], byte 1
-   329 000003DF 83C302              <1>     add bx, 2
-   330 000003E2 EBE9                <1>     jmp loop_start_25
-   331                              <1> loop_ended_25:
-   332 000003E4 83C3FF              <1>     add bx, -1
-   333                              <1> loop_start_26:
-   334 000003E7 3E8A07              <1>     mov al, byte [ds:bx]
-   335 000003EA 08C0                <1>     or al, al
-   336 000003EC 7410                <1>     jz loop_ended_26
-   337 000003EE 83C301              <1>     add bx, 1
-   338 000003F1 3E800701            <1>     add byte [ds:bx], byte 1
-   339 000003F5 83C3FF              <1>     add bx, -1
-   340 000003F8 3EC60700            <1>     mov byte [ds:bx], byte 0
-   341 000003FC EBE9                <1>     jmp loop_start_26
-   342                              <1> loop_ended_26:
-   343 000003FE 3E800701            <1>     add byte [ds:bx], byte 1
-   344 00000402 83C301              <1>     add bx, 1
-   345                              <1> loop_start_27:
-   346 00000405 3E8A07              <1>     mov al, byte [ds:bx]
-   347 00000408 08C0                <1>     or al, al
-   348 0000040A 7410                <1>     jz loop_ended_27
-   349 0000040C 83C3FF              <1>     add bx, -1
-   350 0000040F 3E8007FF            <1>     add byte [ds:bx], byte 255
-   351 00000413 83C301              <1>     add bx, 1
-   352 00000416 3E8007FF            <1>     add byte [ds:bx], byte 255
-   353 0000041A EBE9                <1>     jmp loop_start_27
-   354                              <1> loop_ended_27:
-   355 0000041C 83C3FE              <1>     add bx, -2
-   356                              <1> loop_start_28:
-   357 0000041F 3E8A07              <1>     mov al, byte [ds:bx]
-   358 00000422 08C0                <1>     or al, al
-   359 00000424 7410                <1>     jz loop_ended_28
-   360 00000426 3E8007FF            <1>     add byte [ds:bx], byte 255
-   361 0000042A 83C302              <1>     add bx, 2
-   362 0000042D 3E800701            <1>     add byte [ds:bx], byte 1
-   363 00000431 83C3FE              <1>     add bx, -2
-   364 00000434 EBE9                <1>     jmp loop_start_28
-   365                              <1> loop_ended_28:
-   366 00000436 83C301              <1>     add bx, 1
-   367                              <1> loop_start_29:
-   368 00000439 3E8A07              <1>     mov al, byte [ds:bx]
-   369 0000043C 08C0                <1>     or al, al
-   370 0000043E 7410                <1>     jz loop_ended_29
-   371 00000440 3E8007FF            <1>     add byte [ds:bx], byte 255
-   372 00000444 83C3FF              <1>     add bx, -1
-   373 00000447 3E800701            <1>     add byte [ds:bx], byte 1
-   374 0000044B 83C301              <1>     add bx, 1
-   375 0000044E EBE9                <1>     jmp loop_start_29
-   376                              <1> loop_ended_29:
-   377 00000450 83C301              <1>     add bx, 1
-   378                              <1> loop_start_30:
-   379 00000453 3E8A07              <1>     mov al, byte [ds:bx]
-   380 00000456 08C0                <1>     or al, al
-   381 00000458 7410                <1>     jz loop_ended_30
-   382 0000045A 3E8007FF            <1>     add byte [ds:bx], byte 255
-   383 0000045E 83C3FF              <1>     add bx, -1
-   384 00000461 3E800701            <1>     add byte [ds:bx], byte 1
-   385 00000465 83C301              <1>     add bx, 1
-   386 00000468 EBE9                <1>     jmp loop_start_30
-   387                              <1> loop_ended_30:
-   388 0000046A 83C3FF              <1>     add bx, -1
-   389                              <1> loop_start_31:
-   390 0000046D 3E8A07              <1>     mov al, byte [ds:bx]
-   391 00000470 08C0                <1>     or al, al
-   392 00000472 0F84A700            <1>     jz loop_ended_31
-   393 00000476 3EC60700            <1>     mov byte [ds:bx], byte 0
-   394 0000047A 83C3FF              <1>     add bx, -1
-   395 0000047D 3EC60700            <1>     mov byte [ds:bx], byte 0
-   396 00000481 83C3FF              <1>     add bx, -1
-   397 00000484 3EC60700            <1>     mov byte [ds:bx], byte 0
-   398 00000488 83C3FF              <1>     add bx, -1
-   399                              <1> loop_start_32:
-   400 0000048B 3E8A07              <1>     mov al, byte [ds:bx]
-   401 0000048E 08C0                <1>     or al, al
-   402 00000490 7417                <1>     jz loop_ended_32
-   403 00000492 3E8007FF            <1>     add byte [ds:bx], byte 255
-   404 00000496 83C301              <1>     add bx, 1
-   405 00000499 3E800701            <1>     add byte [ds:bx], byte 1
-   406 0000049D 83C301              <1>     add bx, 1
-   407 000004A0 3E800701            <1>     add byte [ds:bx], byte 1
-   408 000004A4 83C3FE              <1>     add bx, -2
-   409 000004A7 EBE2                <1>     jmp loop_start_32
-   410                              <1> loop_ended_32:
-   411 000004A9 83C302              <1>     add bx, 2
-   412                              <1> loop_start_33:
-   413 000004AC 3E8A07              <1>     mov al, byte [ds:bx]
-   414 000004AF 08C0                <1>     or al, al
-   415 000004B1 7410                <1>     jz loop_ended_33
-   416 000004B3 3E8007FF            <1>     add byte [ds:bx], byte 255
-   417 000004B7 83C3FE              <1>     add bx, -2
-   418 000004BA 3E800701            <1>     add byte [ds:bx], byte 1
-   419 000004BE 83C302              <1>     add bx, 2
-   420 000004C1 EBE9                <1>     jmp loop_start_33
-   421                              <1> loop_ended_33:
-   422 000004C3 3EC60701            <1>     mov byte [ds:bx], byte 1
+   317                              <1> loop_start_24:
+   318 000003C1 3E8A07              <1>     mov al, byte [ds:bx]
+   319 000003C4 08C0                <1>     or al, al
+   320 000003C6 7410                <1>     jz loop_ended_24
+   321 000003C8 3E8007FF            <1>     add byte [ds:bx], byte 255
+   322 000003CC 83C3FF              <1>     add bx, -1
+   323 000003CF 3E800701            <1>     add byte [ds:bx], byte 1
+   324 000003D3 83C301              <1>     add bx, 1
+   325 000003D6 EBE9                <1>     jmp loop_start_24
+   326                              <1> loop_ended_24:
+   327 000003D8 83C301              <1>     add bx, 1
+   328                              <1> loop_start_25:
+   329 000003DB 3E8A07              <1>     mov al, byte [ds:bx]
+   330 000003DE 08C0                <1>     or al, al
+   331 000003E0 7410                <1>     jz loop_ended_25
+   332 000003E2 3E8007FF            <1>     add byte [ds:bx], byte 255
+   333 000003E6 83C3FF              <1>     add bx, -1
+   334 000003E9 3E800701            <1>     add byte [ds:bx], byte 1
+   335 000003ED 83C301              <1>     add bx, 1
+   336 000003F0 EBE9                <1>     jmp loop_start_25
+   337                              <1> loop_ended_25:
+   338 000003F2 83C3FF              <1>     add bx, -1
+   339                              <1> loop_start_26:
+   340 000003F5 3E8A07              <1>     mov al, byte [ds:bx]
+   341 000003F8 08C0                <1>     or al, al
+   342 000003FA 7469                <1>     jz loop_ended_26
+   343 000003FC 3EC60700            <1>     mov byte [ds:bx], byte 0
+   344 00000400 83C3FF              <1>     add bx, -1
+   345 00000403 3EC60700            <1>     mov byte [ds:bx], byte 0
+   346 00000407 83C3FF              <1>     add bx, -1
+   347 0000040A 3EC60700            <1>     mov byte [ds:bx], byte 0
+   348 0000040E 83C3FF              <1>     add bx, -1
+   349                              <1> loop_start_27:
+   350 00000411 3E8A07              <1>     mov al, byte [ds:bx]
+   351 00000414 08C0                <1>     or al, al
+   352 00000416 7410                <1>     jz loop_ended_27
+   353 00000418 3E8007FF            <1>     add byte [ds:bx], byte 255
+   354 0000041C 83C302              <1>     add bx, 2
+   355 0000041F 3E800701            <1>     add byte [ds:bx], byte 1
+   356 00000423 83C3FE              <1>     add bx, -2
+   357 00000426 EBE9                <1>     jmp loop_start_27
+   358                              <1> loop_ended_27:
+   359 00000428 83C301              <1>     add bx, 1
+   360                              <1> loop_start_28:
+   361 0000042B 3E8A07              <1>     mov al, byte [ds:bx]
+   362 0000042E 08C0                <1>     or al, al
+   363 00000430 7410                <1>     jz loop_ended_28
+   364 00000432 3E8007FF            <1>     add byte [ds:bx], byte 255
+   365 00000436 83C3FF              <1>     add bx, -1
+   366 00000439 3E800701            <1>     add byte [ds:bx], byte 1
+   367 0000043D 83C301              <1>     add bx, 1
+   368 00000440 EBE9                <1>     jmp loop_start_28
+   369                              <1> loop_ended_28:
+   370 00000442 83C301              <1>     add bx, 1
+   371                              <1> loop_start_29:
+   372 00000445 3E8A07              <1>     mov al, byte [ds:bx]
+   373 00000448 08C0                <1>     or al, al
+   374 0000044A 7410                <1>     jz loop_ended_29
+   375 0000044C 3E8007FF            <1>     add byte [ds:bx], byte 255
+   376 00000450 83C3FF              <1>     add bx, -1
+   377 00000453 3E800701            <1>     add byte [ds:bx], byte 1
+   378 00000457 83C301              <1>     add bx, 1
+   379 0000045A EBE9                <1>     jmp loop_start_29
+   380                              <1> loop_ended_29:
+   381 0000045C 3EC60700            <1>     mov byte [ds:bx], byte 0
+   382 00000460 83C301              <1>     add bx, 1
+   383 00000463 EB90                <1>     jmp loop_start_26
+   384                              <1> loop_ended_26:
+   385 00000465 83C3FF              <1>     add bx, -1
+   386                              <1> loop_start_30:
+   387 00000468 3E8A07              <1>     mov al, byte [ds:bx]
+   388 0000046B 08C0                <1>     or al, al
+   389 0000046D 0F840001            <1>     jz loop_ended_30
+   390 00000471 3EC60700            <1>     mov byte [ds:bx], byte 0
+   391 00000475 83C3FE              <1>     add bx, -2
+   392                              <1> loop_start_31:
+   393 00000478 3E8A07              <1>     mov al, byte [ds:bx]
+   394 0000047B 08C0                <1>     or al, al
+   395 0000047D 7417                <1>     jz loop_ended_31
+   396 0000047F 3E8007FF            <1>     add byte [ds:bx], byte 255
+   397 00000483 83C302              <1>     add bx, 2
+   398 00000486 3E800701            <1>     add byte [ds:bx], byte 1
+   399 0000048A 83C301              <1>     add bx, 1
+   400 0000048D 3E800701            <1>     add byte [ds:bx], byte 1
+   401 00000491 83C3FD              <1>     add bx, -3
+   402 00000494 EBE2                <1>     jmp loop_start_31
+   403                              <1> loop_ended_31:
+   404 00000496 83C303              <1>     add bx, 3
+   405                              <1> loop_start_32:
+   406 00000499 3E8A07              <1>     mov al, byte [ds:bx]
+   407 0000049C 08C0                <1>     or al, al
+   408 0000049E 7410                <1>     jz loop_ended_32
+   409 000004A0 3E8007FF            <1>     add byte [ds:bx], byte 255
+   410 000004A4 83C3FD              <1>     add bx, -3
+   411 000004A7 3E800701            <1>     add byte [ds:bx], byte 1
+   412 000004AB 83C303              <1>     add bx, 3
+   413 000004AE EBE9                <1>     jmp loop_start_32
+   414                              <1> loop_ended_32:
+   415 000004B0 83C3FD              <1>     add bx, -3
+   416 000004B3 3EC60700            <1>     mov byte [ds:bx], byte 0
+   417 000004B7 83C301              <1>     add bx, 1
+   418 000004BA 3E8007FE            <1>     add byte [ds:bx], byte 254
+   419                              <1> loop_start_33:
+   420 000004BE 3E8A07              <1>     mov al, byte [ds:bx]
+   421 000004C1 08C0                <1>     or al, al
+   422 000004C3 745F                <1>     jz loop_ended_33
    423                              <1> loop_start_34:
-   424 000004C7 3E8A07              <1>     mov al, byte [ds:bx]
-   425 000004CA 08C0                <1>     or al, al
-   426 000004CC 7410                <1>     jz loop_ended_34
-   427 000004CE 3E8007FF            <1>     add byte [ds:bx], byte 255
-   428 000004D2 83C3FF              <1>     add bx, -1
-   429 000004D5 3E8007FF            <1>     add byte [ds:bx], byte 255
-   430 000004D9 83C301              <1>     add bx, 1
-   431 000004DC EBE9                <1>     jmp loop_start_34
-   432                              <1> loop_ended_34:
-   433 000004DE 83C3FF              <1>     add bx, -1
-   434                              <1> loop_start_35:
-   435 000004E1 3E8A07              <1>     mov al, byte [ds:bx]
-   436 000004E4 08C0                <1>     or al, al
-   437 000004E6 742B                <1>     jz loop_ended_35
-   438 000004E8 3EC60700            <1>     mov byte [ds:bx], byte 0
-   439 000004EC 83C3FF              <1>     add bx, -1
-   440 000004EF 3EC60708            <1>     mov byte [ds:bx], byte 8
-   441 000004F3 3E8A07              <1>     mov al, byte [ds:bx]
-   442 000004F6 E834FB              <1>     call putc
-   443 000004F9 3EC60720            <1>     mov byte [ds:bx], byte 32
-   444 000004FD 3E8A07              <1>     mov al, byte [ds:bx]
-   445 00000500 E82AFB              <1>     call putc
-   446 00000503 3EC60708            <1>     mov byte [ds:bx], byte 8
-   447 00000507 3E8A07              <1>     mov al, byte [ds:bx]
-   448 0000050A E820FB              <1>     call putc
-   449 0000050D 3EC60700            <1>     mov byte [ds:bx], byte 0
-   450 00000511 EBCE                <1>     jmp loop_start_35
-   451                              <1> loop_ended_35:
-   452 00000513 3EC60700            <1>     mov byte [ds:bx], byte 0
-   453 00000517 83C301              <1>     add bx, 1
-   454 0000051A E950FF              <1>     jmp loop_start_31
-   455                              <1> loop_ended_31:
-   456 0000051D 83C3FF              <1>     add bx, -1
-   457                              <1> loop_start_36:
-   458 00000520 3E8A07              <1>     mov al, byte [ds:bx]
-   459 00000523 08C0                <1>     or al, al
-   460 00000525 0F84EA01            <1>     jz loop_ended_36
-   461 00000529 3EC60700            <1>     mov byte [ds:bx], byte 0
-   462 0000052D 83C3FF              <1>     add bx, -1
-   463                              <1> loop_start_37:
-   464 00000530 3E8A07              <1>     mov al, byte [ds:bx]
-   465 00000533 08C0                <1>     or al, al
-   466 00000535 7417                <1>     jz loop_ended_37
-   467 00000537 3E8007FF            <1>     add byte [ds:bx], byte 255
-   468 0000053B 83C301              <1>     add bx, 1
-   469 0000053E 3E800701            <1>     add byte [ds:bx], byte 1
-   470 00000542 83C301              <1>     add bx, 1
-   471 00000545 3E800701            <1>     add byte [ds:bx], byte 1
-   472 00000549 83C3FE              <1>     add bx, -2
-   473 0000054C EBE2                <1>     jmp loop_start_37
-   474                              <1> loop_ended_37:
-   475 0000054E 83C302              <1>     add bx, 2
-   476                              <1> loop_start_38:
-   477 00000551 3E8A07              <1>     mov al, byte [ds:bx]
-   478 00000554 08C0                <1>     or al, al
-   479 00000556 7410                <1>     jz loop_ended_38
-   480 00000558 3E8007FF            <1>     add byte [ds:bx], byte 255
-   481 0000055C 83C3FE              <1>     add bx, -2
-   482 0000055F 3E800701            <1>     add byte [ds:bx], byte 1
-   483 00000563 83C302              <1>     add bx, 2
-   484 00000566 EBE9                <1>     jmp loop_start_38
-   485                              <1> loop_ended_38:
-   486 00000568 3EC6070D            <1>     mov byte [ds:bx], byte 13
-   487                              <1> loop_start_39:
-   488 0000056C 3E8A07              <1>     mov al, byte [ds:bx]
-   489 0000056F 08C0                <1>     or al, al
-   490 00000571 7410                <1>     jz loop_ended_39
-   491 00000573 3E8007FF            <1>     add byte [ds:bx], byte 255
-   492 00000577 83C3FF              <1>     add bx, -1
-   493 0000057A 3E8007FF            <1>     add byte [ds:bx], byte 255
-   494 0000057E 83C301              <1>     add bx, 1
-   495 00000581 EBE9                <1>     jmp loop_start_39
-   496                              <1> loop_ended_39:
-   497 00000583 83C3FF              <1>     add bx, -1
-   498                              <1> loop_start_40:
-   499 00000586 3E8A07              <1>     mov al, byte [ds:bx]
-   500 00000589 08C0                <1>     or al, al
-   501 0000058B 7410                <1>     jz loop_ended_40
-   502 0000058D 83C301              <1>     add bx, 1
-   503 00000590 3E800701            <1>     add byte [ds:bx], byte 1
-   504 00000594 83C3FF              <1>     add bx, -1
-   505 00000597 3EC60700            <1>     mov byte [ds:bx], byte 0
-   506 0000059B EBE9                <1>     jmp loop_start_40
-   507                              <1> loop_ended_40:
-   508 0000059D 3E800701            <1>     add byte [ds:bx], byte 1
-   509 000005A1 83C301              <1>     add bx, 1
-   510                              <1> loop_start_41:
-   511 000005A4 3E8A07              <1>     mov al, byte [ds:bx]
-   512 000005A7 08C0                <1>     or al, al
-   513 000005A9 7410                <1>     jz loop_ended_41
-   514 000005AB 83C3FF              <1>     add bx, -1
-   515 000005AE 3E8007FF            <1>     add byte [ds:bx], byte 255
-   516 000005B2 83C301              <1>     add bx, 1
-   517 000005B5 3E8007FF            <1>     add byte [ds:bx], byte 255
-   518 000005B9 EBE9                <1>     jmp loop_start_41
-   519                              <1> loop_ended_41:
-   520 000005BB 83C3FF              <1>     add bx, -1
-   521                              <1> loop_start_42:
-   522 000005BE 3E8A07              <1>     mov al, byte [ds:bx]
-   523 000005C1 08C0                <1>     or al, al
-   524 000005C3 7417                <1>     jz loop_ended_42
-   525 000005C5 3E8007FF            <1>     add byte [ds:bx], byte 255
-   526 000005C9 83C301              <1>     add bx, 1
-   527 000005CC 3E800701            <1>     add byte [ds:bx], byte 1
-   528 000005D0 83C301              <1>     add bx, 1
-   529 000005D3 3E800701            <1>     add byte [ds:bx], byte 1
-   530 000005D7 83C3FE              <1>     add bx, -2
-   531 000005DA EBE2                <1>     jmp loop_start_42
-   532                              <1> loop_ended_42:
-   533 000005DC 83C302              <1>     add bx, 2
-   534                              <1> loop_start_43:
-   535 000005DF 3E8A07              <1>     mov al, byte [ds:bx]
-   536 000005E2 08C0                <1>     or al, al
-   537 000005E4 7410                <1>     jz loop_ended_43
-   538 000005E6 3E8007FF            <1>     add byte [ds:bx], byte 255
-   539 000005EA 83C3FE              <1>     add bx, -2
-   540 000005ED 3E800701            <1>     add byte [ds:bx], byte 1
-   541 000005F1 83C302              <1>     add bx, 2
-   542 000005F4 EBE9                <1>     jmp loop_start_43
-   543                              <1> loop_ended_43:
-   544 000005F6 83C3FF              <1>     add bx, -1
-   545                              <1> loop_start_44:
-   546 000005F9 3E8A07              <1>     mov al, byte [ds:bx]
-   547 000005FC 08C0                <1>     or al, al
-   548 000005FE 7410                <1>     jz loop_ended_44
-   549 00000600 83C301              <1>     add bx, 1
-   550 00000603 3E800701            <1>     add byte [ds:bx], byte 1
-   551 00000607 83C3FF              <1>     add bx, -1
-   552 0000060A 3EC60700            <1>     mov byte [ds:bx], byte 0
-   553 0000060E EBE9                <1>     jmp loop_start_44
-   554                              <1> loop_ended_44:
-   555 00000610 3E800701            <1>     add byte [ds:bx], byte 1
-   556 00000614 83C301              <1>     add bx, 1
-   557                              <1> loop_start_45:
-   558 00000617 3E8A07              <1>     mov al, byte [ds:bx]
-   559 0000061A 08C0                <1>     or al, al
-   560 0000061C 7410                <1>     jz loop_ended_45
-   561 0000061E 83C3FF              <1>     add bx, -1
-   562 00000621 3E8007FF            <1>     add byte [ds:bx], byte 255
-   563 00000625 83C301              <1>     add bx, 1
-   564 00000628 3E8007FF            <1>     add byte [ds:bx], byte 255
-   565 0000062C EBE9                <1>     jmp loop_start_45
-   566                              <1> loop_ended_45:
-   567 0000062E 83C3FE              <1>     add bx, -2
-   568                              <1> loop_start_46:
-   569 00000631 3E8A07              <1>     mov al, byte [ds:bx]
-   570 00000634 08C0                <1>     or al, al
-   571 00000636 7410                <1>     jz loop_ended_46
-   572 00000638 3E8007FF            <1>     add byte [ds:bx], byte 255
-   573 0000063C 83C302              <1>     add bx, 2
-   574 0000063F 3E800701            <1>     add byte [ds:bx], byte 1
-   575 00000643 83C3FE              <1>     add bx, -2
-   576 00000646 EBE9                <1>     jmp loop_start_46
-   577                              <1> loop_ended_46:
-   578 00000648 83C301              <1>     add bx, 1
-   579                              <1> loop_start_47:
-   580 0000064B 3E8A07              <1>     mov al, byte [ds:bx]
-   581 0000064E 08C0                <1>     or al, al
-   582 00000650 7410                <1>     jz loop_ended_47
-   583 00000652 3E8007FF            <1>     add byte [ds:bx], byte 255
-   584 00000656 83C3FF              <1>     add bx, -1
-   585 00000659 3E800701            <1>     add byte [ds:bx], byte 1
-   586 0000065D 83C301              <1>     add bx, 1
-   587 00000660 EBE9                <1>     jmp loop_start_47
-   588                              <1> loop_ended_47:
-   589 00000662 83C301              <1>     add bx, 1
-   590                              <1> loop_start_48:
-   591 00000665 3E8A07              <1>     mov al, byte [ds:bx]
-   592 00000668 08C0                <1>     or al, al
-   593 0000066A 7410                <1>     jz loop_ended_48
-   594 0000066C 3E8007FF            <1>     add byte [ds:bx], byte 255
-   595 00000670 83C3FF              <1>     add bx, -1
-   596 00000673 3E800701            <1>     add byte [ds:bx], byte 1
-   597 00000677 83C301              <1>     add bx, 1
-   598 0000067A EBE9                <1>     jmp loop_start_48
+   424 000004C5 3E8A07              <1>     mov al, byte [ds:bx]
+   425 000004C8 08C0                <1>     or al, al
+   426 000004CA 7405                <1>     jz loop_ended_34
+   427 000004CC 83C301              <1>     add bx, 1
+   428 000004CF EBF4                <1>     jmp loop_start_34
+   429                              <1> loop_ended_34:
+   430 000004D1 83C3FF              <1>     add bx, -1
+   431                              <1> loop_start_35:
+   432 000004D4 3E8A07              <1>     mov al, byte [ds:bx]
+   433 000004D7 08C0                <1>     or al, al
+   434 000004D9 7417                <1>     jz loop_ended_35
+   435 000004DB 3E8007FF            <1>     add byte [ds:bx], byte 255
+   436 000004DF 83C301              <1>     add bx, 1
+   437 000004E2 3E800701            <1>     add byte [ds:bx], byte 1
+   438 000004E6 83C301              <1>     add bx, 1
+   439 000004E9 3E800701            <1>     add byte [ds:bx], byte 1
+   440 000004ED 83C3FE              <1>     add bx, -2
+   441 000004F0 EBE2                <1>     jmp loop_start_35
+   442                              <1> loop_ended_35:
+   443 000004F2 83C302              <1>     add bx, 2
+   444                              <1> loop_start_36:
+   445 000004F5 3E8A07              <1>     mov al, byte [ds:bx]
+   446 000004F8 08C0                <1>     or al, al
+   447 000004FA 7410                <1>     jz loop_ended_36
+   448 000004FC 3E8007FF            <1>     add byte [ds:bx], byte 255
+   449 00000500 83C3FE              <1>     add bx, -2
+   450 00000503 3E800701            <1>     add byte [ds:bx], byte 1
+   451 00000507 83C302              <1>     add bx, 2
+   452 0000050A EBE9                <1>     jmp loop_start_36
+   453                              <1> loop_ended_36:
+   454 0000050C 83C3FF              <1>     add bx, -1
+   455                              <1> loop_start_37:
+   456 0000050F 3E8A07              <1>     mov al, byte [ds:bx]
+   457 00000512 08C0                <1>     or al, al
+   458 00000514 7405                <1>     jz loop_ended_37
+   459 00000516 83C3FF              <1>     add bx, -1
+   460 00000519 EBF4                <1>     jmp loop_start_37
+   461                              <1> loop_ended_37:
+   462 0000051B 83C301              <1>     add bx, 1
+   463 0000051E 3E8007FF            <1>     add byte [ds:bx], byte 255
+   464 00000522 EB9A                <1>     jmp loop_start_33
+   465                              <1> loop_ended_33:
+   466 00000524 83C301              <1>     add bx, 1
+   467                              <1> loop_start_38:
+   468 00000527 3E8A07              <1>     mov al, byte [ds:bx]
+   469 0000052A 08C0                <1>     or al, al
+   470 0000052C 7417                <1>     jz loop_ended_38
+   471 0000052E 3E8007FF            <1>     add byte [ds:bx], byte 255
+   472 00000532 83C3FF              <1>     add bx, -1
+   473 00000535 3E800701            <1>     add byte [ds:bx], byte 1
+   474 00000539 83C3FF              <1>     add bx, -1
+   475 0000053C 3E800701            <1>     add byte [ds:bx], byte 1
+   476 00000540 83C302              <1>     add bx, 2
+   477 00000543 EBE2                <1>     jmp loop_start_38
+   478                              <1> loop_ended_38:
+   479 00000545 83C3FE              <1>     add bx, -2
+   480                              <1> loop_start_39:
+   481 00000548 3E8A07              <1>     mov al, byte [ds:bx]
+   482 0000054B 08C0                <1>     or al, al
+   483 0000054D 7410                <1>     jz loop_ended_39
+   484 0000054F 3E8007FF            <1>     add byte [ds:bx], byte 255
+   485 00000553 83C302              <1>     add bx, 2
+   486 00000556 3E800701            <1>     add byte [ds:bx], byte 1
+   487 0000055A 83C3FE              <1>     add bx, -2
+   488 0000055D EBE9                <1>     jmp loop_start_39
+   489                              <1> loop_ended_39:
+   490 0000055F 83C301              <1>     add bx, 1
+   491                              <1> loop_start_40:
+   492 00000562 3E8A07              <1>     mov al, byte [ds:bx]
+   493 00000565 08C0                <1>     or al, al
+   494 00000567 7405                <1>     jz loop_ended_40
+   495 00000569 83C301              <1>     add bx, 1
+   496 0000056C EBF4                <1>     jmp loop_start_40
+   497                              <1> loop_ended_40:
+   498 0000056E E9F7FE              <1>     jmp loop_start_30
+   499                              <1> loop_ended_30:
+   500 00000571 E922FD              <1>     jmp loop_start_13
+   501                              <1> loop_ended_13:
+   502 00000574 3EC6070A            <1>     mov byte [ds:bx], byte 10
+   503 00000578 83C301              <1>     add bx, 1
+   504 0000057B 3EC6070D            <1>     mov byte [ds:bx], byte 13
+   505                              <1> loop_start_41:
+   506 0000057F 3E8A07              <1>     mov al, byte [ds:bx]
+   507 00000582 08C0                <1>     or al, al
+   508 00000584 7405                <1>     jz loop_ended_41
+   509 00000586 83C3FF              <1>     add bx, -1
+   510 00000589 EBF4                <1>     jmp loop_start_41
+   511                              <1> loop_ended_41:
+   512 0000058B 3E800701            <1>     add byte [ds:bx], byte 1
+   513 0000058F 83C301              <1>     add bx, 1
+   514                              <1> loop_start_42:
+   515 00000592 3E8A07              <1>     mov al, byte [ds:bx]
+   516 00000595 08C0                <1>     or al, al
+   517 00000597 740F                <1>     jz loop_ended_42
+   518 00000599 3E8A07              <1>     mov al, byte [ds:bx]
+   519 0000059C E88EFA              <1>     call putc
+   520 0000059F 3EC60700            <1>     mov byte [ds:bx], byte 0
+   521 000005A3 83C301              <1>     add bx, 1
+   522 000005A6 EBEA                <1>     jmp loop_start_42
+   523                              <1> loop_ended_42:
+   524 000005A8 3E8007FF            <1>     add byte [ds:bx], byte 255
+   525                              <1> loop_start_43:
+   526 000005AC 3E8A07              <1>     mov al, byte [ds:bx]
+   527 000005AF 08C0                <1>     or al, al
+   528 000005B1 740D                <1>     jz loop_ended_43
+   529 000005B3 3E800701            <1>     add byte [ds:bx], byte 1
+   530 000005B7 83C3FF              <1>     add bx, -1
+   531 000005BA 3E8007FF            <1>     add byte [ds:bx], byte 255
+   532 000005BE EBEC                <1>     jmp loop_start_43
+   533                              <1> loop_ended_43:
+   534 000005C0 83C3FF              <1>     add bx, -1
+   535                              <1> loop_start_44:
+   536 000005C3 3E8A07              <1>     mov al, byte [ds:bx]
+   537 000005C6 08C0                <1>     or al, al
+   538 000005C8 7405                <1>     jz loop_ended_44
+   539 000005CA 83C3FF              <1>     add bx, -1
+   540 000005CD EBF4                <1>     jmp loop_start_44
+   541                              <1> loop_ended_44:
+   542 000005CF 3E800701            <1>     add byte [ds:bx], byte 1
+   543 000005D3 83C301              <1>     add bx, 1
+   544                              <1> loop_start_45:
+   545 000005D6 3E8A07              <1>     mov al, byte [ds:bx]
+   546 000005D9 08C0                <1>     or al, al
+   547 000005DB 740F                <1>     jz loop_ended_45
+   548 000005DD 3E8A07              <1>     mov al, byte [ds:bx]
+   549 000005E0 E84AFA              <1>     call putc
+   550 000005E3 3EC60700            <1>     mov byte [ds:bx], byte 0
+   551 000005E7 83C301              <1>     add bx, 1
+   552 000005EA EBEA                <1>     jmp loop_start_45
+   553                              <1> loop_ended_45:
+   554 000005EC 3E8007FF            <1>     add byte [ds:bx], byte 255
+   555                              <1> loop_start_46:
+   556 000005F0 3E8A07              <1>     mov al, byte [ds:bx]
+   557 000005F3 08C0                <1>     or al, al
+   558 000005F5 740D                <1>     jz loop_ended_46
+   559 000005F7 3E800701            <1>     add byte [ds:bx], byte 1
+   560 000005FB 83C3FF              <1>     add bx, -1
+   561 000005FE 3E8007FF            <1>     add byte [ds:bx], byte 255
+   562 00000602 EBEC                <1>     jmp loop_start_46
+   563                              <1> loop_ended_46:
+   564 00000604 3EC60701            <1>     mov byte [ds:bx], byte 1
+   565                              <1> loop_start_47:
+   566 00000608 3E8A07              <1>     mov al, byte [ds:bx]
+   567 0000060B 08C0                <1>     or al, al
+   568 0000060D 0F841C05            <1>     jz loop_ended_47
+   569 00000611 83C301              <1>     add bx, 1
+   570 00000614 3EC60700            <1>     mov byte [ds:bx], byte 0
+   571 00000618 83C301              <1>     add bx, 1
+   572 0000061B 3EC60773            <1>     mov byte [ds:bx], byte 115
+   573 0000061F 83C301              <1>     add bx, 1
+   574 00000622 3EC60774            <1>     mov byte [ds:bx], byte 116
+   575 00000626 83C301              <1>     add bx, 1
+   576 00000629 3EC60765            <1>     mov byte [ds:bx], byte 101
+   577 0000062D 83C301              <1>     add bx, 1
+   578 00000630 3EC6076E            <1>     mov byte [ds:bx], byte 110
+   579 00000634 83C301              <1>     add bx, 1
+   580 00000637 3EC6076F            <1>     mov byte [ds:bx], byte 111
+   581 0000063B 83C301              <1>     add bx, 1
+   582 0000063E 3EC60764            <1>     mov byte [ds:bx], byte 100
+   583 00000642 83C301              <1>     add bx, 1
+   584 00000645 3EC60779            <1>     mov byte [ds:bx], byte 121
+   585 00000649 83C301              <1>     add bx, 1
+   586 0000064C 3EC6076F            <1>     mov byte [ds:bx], byte 111
+   587 00000650 83C301              <1>     add bx, 1
+   588 00000653 3EC6076E            <1>     mov byte [ds:bx], byte 110
+   589 00000657 83C301              <1>     add bx, 1
+   590 0000065A 3EC60724            <1>     mov byte [ds:bx], byte 36
+   591 0000065E 83C301              <1>     add bx, 1
+   592 00000661 3EC60720            <1>     mov byte [ds:bx], byte 32
+   593                              <1> loop_start_48:
+   594 00000665 3E8A07              <1>     mov al, byte [ds:bx]
+   595 00000668 08C0                <1>     or al, al
+   596 0000066A 7405                <1>     jz loop_ended_48
+   597 0000066C 83C3FF              <1>     add bx, -1
+   598 0000066F EBF4                <1>     jmp loop_start_48
    599                              <1> loop_ended_48:
-   600 0000067C 83C3FF              <1>     add bx, -1
-   601                              <1> loop_start_49:
-   602 0000067F 3E8A07              <1>     mov al, byte [ds:bx]
-   603 00000682 08C0                <1>     or al, al
-   604 00000684 7432                <1>     jz loop_ended_49
-   605 00000686 3EC60700            <1>     mov byte [ds:bx], byte 0
-   606 0000068A 83C3FF              <1>     add bx, -1
-   607 0000068D 3EC60700            <1>     mov byte [ds:bx], byte 0
-   608 00000691 83C3FF              <1>     add bx, -1
-   609 00000694 3EC6070A            <1>     mov byte [ds:bx], byte 10
-   610 00000698 3E8A07              <1>     mov al, byte [ds:bx]
-   611 0000069B E88FF9              <1>     call putc
-   612 0000069E 3EC6070D            <1>     mov byte [ds:bx], byte 13
-   613 000006A2 3E8A07              <1>     mov al, byte [ds:bx]
-   614 000006A5 E885F9              <1>     call putc
-   615 000006A8 3EC60700            <1>     mov byte [ds:bx], byte 0
-   616 000006AC 83C301              <1>     add bx, 1
-   617 000006AF 3EC60700            <1>     mov byte [ds:bx], byte 0
-   618 000006B3 83C301              <1>     add bx, 1
-   619 000006B6 EBC7                <1>     jmp loop_start_49
-   620                              <1> loop_ended_49:
-   621 000006B8 83C3FF              <1>     add bx, -1
-   622                              <1> loop_start_50:
-   623 000006BB 3E8A07              <1>     mov al, byte [ds:bx]
-   624 000006BE 08C0                <1>     or al, al
-   625 000006C0 744E                <1>     jz loop_ended_50
-   626 000006C2 3EC60700            <1>     mov byte [ds:bx], byte 0
-   627 000006C6 83C3FF              <1>     add bx, -1
-   628                              <1> loop_start_51:
-   629 000006C9 3E8A07              <1>     mov al, byte [ds:bx]
-   630 000006CC 08C0                <1>     or al, al
-   631 000006CE 7417                <1>     jz loop_ended_51
-   632 000006D0 3E8007FF            <1>     add byte [ds:bx], byte 255
-   633 000006D4 83C301              <1>     add bx, 1
-   634 000006D7 3E800701            <1>     add byte [ds:bx], byte 1
-   635 000006DB 83C301              <1>     add bx, 1
-   636 000006DE 3E800701            <1>     add byte [ds:bx], byte 1
-   637 000006E2 83C3FE              <1>     add bx, -2
-   638 000006E5 EBE2                <1>     jmp loop_start_51
-   639                              <1> loop_ended_51:
-   640 000006E7 83C302              <1>     add bx, 2
-   641                              <1> loop_start_52:
-   642 000006EA 3E8A07              <1>     mov al, byte [ds:bx]
-   643 000006ED 08C0                <1>     or al, al
-   644 000006EF 7410                <1>     jz loop_ended_52
-   645 000006F1 3E8007FF            <1>     add byte [ds:bx], byte 255
-   646 000006F5 83C3FE              <1>     add bx, -2
-   647 000006F8 3E800701            <1>     add byte [ds:bx], byte 1
-   648 000006FC 83C302              <1>     add bx, 2
-   649 000006FF EBE9                <1>     jmp loop_start_52
-   650                              <1> loop_ended_52:
-   651 00000701 83C3FF              <1>     add bx, -1
-   652 00000704 3E8A07              <1>     mov al, byte [ds:bx]
-   653 00000707 E823F9              <1>     call putc
-   654 0000070A 3EC60700            <1>     mov byte [ds:bx], byte 0
-   655 0000070E EBAB                <1>     jmp loop_start_50
-   656                              <1> loop_ended_50:
-   657 00000710 E90DFE              <1>     jmp loop_start_36
-   658                              <1> loop_ended_36:
-   659 00000713 83C3FF              <1>     add bx, -1
-   660 00000716 E9F6FB              <1>     jmp loop_start_18
-   661                              <1> loop_ended_18:
-   662 00000719 3E8007FF            <1>     add byte [ds:bx], byte 255
-   663                              <1> loop_start_53:
-   664 0000071D 3E8A07              <1>     mov al, byte [ds:bx]
-   665 00000720 08C0                <1>     or al, al
-   666 00000722 740D                <1>     jz loop_ended_53
-   667 00000724 3E800701            <1>     add byte [ds:bx], byte 1
-   668 00000728 83C3FF              <1>     add bx, -1
-   669 0000072B 3E8007FF            <1>     add byte [ds:bx], byte 255
-   670 0000072F EBEC                <1>     jmp loop_start_53
-   671                              <1> loop_ended_53:
-   672 00000731 83C301              <1>     add bx, 1
-   673                              <1> loop_start_54:
-   674 00000734 3E8A07              <1>     mov al, byte [ds:bx]
-   675 00000737 08C0                <1>     or al, al
-   676 00000739 7405                <1>     jz loop_ended_54
-   677 0000073B 83C301              <1>     add bx, 1
-   678 0000073E EBF4                <1>     jmp loop_start_54
-   679                              <1> loop_ended_54:
-   680 00000740 3EC6070A            <1>     mov byte [ds:bx], byte 10
-   681 00000744 83C301              <1>     add bx, 1
-   682 00000747 3EC6070D            <1>     mov byte [ds:bx], byte 13
-   683                              <1> loop_start_55:
-   684 0000074B 3E8A07              <1>     mov al, byte [ds:bx]
-   685 0000074E 08C0                <1>     or al, al
-   686 00000750 7405                <1>     jz loop_ended_55
-   687 00000752 83C3FF              <1>     add bx, -1
-   688 00000755 EBF4                <1>     jmp loop_start_55
-   689                              <1> loop_ended_55:
-   690 00000757 3E800701            <1>     add byte [ds:bx], byte 1
-   691 0000075B 83C301              <1>     add bx, 1
-   692                              <1> loop_start_56:
-   693 0000075E 3E8A07              <1>     mov al, byte [ds:bx]
-   694 00000761 08C0                <1>     or al, al
-   695 00000763 740F                <1>     jz loop_ended_56
-   696 00000765 3E8A07              <1>     mov al, byte [ds:bx]
-   697 00000768 E8C2F8              <1>     call putc
-   698 0000076B 3EC60700            <1>     mov byte [ds:bx], byte 0
-   699 0000076F 83C301              <1>     add bx, 1
-   700 00000772 EBEA                <1>     jmp loop_start_56
-   701                              <1> loop_ended_56:
-   702 00000774 3E8007FF            <1>     add byte [ds:bx], byte 255
-   703                              <1> loop_start_57:
-   704 00000778 3E8A07              <1>     mov al, byte [ds:bx]
-   705 0000077B 08C0                <1>     or al, al
-   706 0000077D 740D                <1>     jz loop_ended_57
-   707 0000077F 3E800701            <1>     add byte [ds:bx], byte 1
-   708 00000783 83C3FF              <1>     add bx, -1
-   709 00000786 3E8007FF            <1>     add byte [ds:bx], byte 255
-   710 0000078A EBEC                <1>     jmp loop_start_57
-   711                              <1> loop_ended_57:
-   712 0000078C 83C3FF              <1>     add bx, -1
-   713 0000078F E9DBFA              <1>     jmp loop_start_14
-   714                              <1> loop_ended_14:
-    72 00000792 61                      	popa
-    73 00000793 C3                      	ret
+   600 00000671 3E800701            <1>     add byte [ds:bx], byte 1
+   601 00000675 83C301              <1>     add bx, 1
+   602                              <1> loop_start_49:
+   603 00000678 3E8A07              <1>     mov al, byte [ds:bx]
+   604 0000067B 08C0                <1>     or al, al
+   605 0000067D 740F                <1>     jz loop_ended_49
+   606 0000067F 3E8A07              <1>     mov al, byte [ds:bx]
+   607 00000682 E8A8F9              <1>     call putc
+   608 00000685 3EC60700            <1>     mov byte [ds:bx], byte 0
+   609 00000689 83C301              <1>     add bx, 1
+   610 0000068C EBEA                <1>     jmp loop_start_49
+   611                              <1> loop_ended_49:
+   612 0000068E 3E8007FF            <1>     add byte [ds:bx], byte 255
+   613                              <1> loop_start_50:
+   614 00000692 3E8A07              <1>     mov al, byte [ds:bx]
+   615 00000695 08C0                <1>     or al, al
+   616 00000697 740D                <1>     jz loop_ended_50
+   617 00000699 3E800701            <1>     add byte [ds:bx], byte 1
+   618 0000069D 83C3FF              <1>     add bx, -1
+   619 000006A0 3E8007FF            <1>     add byte [ds:bx], byte 255
+   620 000006A4 EBEC                <1>     jmp loop_start_50
+   621                              <1> loop_ended_50:
+   622 000006A6 3EC60701            <1>     mov byte [ds:bx], byte 1
+   623                              <1> loop_start_51:
+   624 000006AA 3E8A07              <1>     mov al, byte [ds:bx]
+   625 000006AD 08C0                <1>     or al, al
+   626 000006AF 0F840104            <1>     jz loop_ended_51
+   627 000006B3 83C301              <1>     add bx, 1
+   628 000006B6 E87EF9              <1>     call getc
+   629                              <1> loop_start_52:
+   630 000006B9 3E8A07              <1>     mov al, byte [ds:bx]
+   631 000006BC 08C0                <1>     or al, al
+   632 000006BE 7417                <1>     jz loop_ended_52
+   633 000006C0 3E8007FF            <1>     add byte [ds:bx], byte 255
+   634 000006C4 83C301              <1>     add bx, 1
+   635 000006C7 3E800701            <1>     add byte [ds:bx], byte 1
+   636 000006CB 83C301              <1>     add bx, 1
+   637 000006CE 3E800701            <1>     add byte [ds:bx], byte 1
+   638 000006D2 83C3FE              <1>     add bx, -2
+   639 000006D5 EBE2                <1>     jmp loop_start_52
+   640                              <1> loop_ended_52:
+   641 000006D7 83C302              <1>     add bx, 2
+   642                              <1> loop_start_53:
+   643 000006DA 3E8A07              <1>     mov al, byte [ds:bx]
+   644 000006DD 08C0                <1>     or al, al
+   645 000006DF 7410                <1>     jz loop_ended_53
+   646 000006E1 3E8007FF            <1>     add byte [ds:bx], byte 255
+   647 000006E5 83C3FE              <1>     add bx, -2
+   648 000006E8 3E800701            <1>     add byte [ds:bx], byte 1
+   649 000006EC 83C302              <1>     add bx, 2
+   650 000006EF EBE9                <1>     jmp loop_start_53
+   651                              <1> loop_ended_53:
+   652 000006F1 3EC60708            <1>     mov byte [ds:bx], byte 8
+   653                              <1> loop_start_54:
+   654 000006F5 3E8A07              <1>     mov al, byte [ds:bx]
+   655 000006F8 08C0                <1>     or al, al
+   656 000006FA 7410                <1>     jz loop_ended_54
+   657 000006FC 3E8007FF            <1>     add byte [ds:bx], byte 255
+   658 00000700 83C3FF              <1>     add bx, -1
+   659 00000703 3E8007FF            <1>     add byte [ds:bx], byte 255
+   660 00000707 83C301              <1>     add bx, 1
+   661 0000070A EBE9                <1>     jmp loop_start_54
+   662                              <1> loop_ended_54:
+   663 0000070C 83C3FF              <1>     add bx, -1
+   664                              <1> loop_start_55:
+   665 0000070F 3E8A07              <1>     mov al, byte [ds:bx]
+   666 00000712 08C0                <1>     or al, al
+   667 00000714 7410                <1>     jz loop_ended_55
+   668 00000716 83C301              <1>     add bx, 1
+   669 00000719 3E800701            <1>     add byte [ds:bx], byte 1
+   670 0000071D 83C3FF              <1>     add bx, -1
+   671 00000720 3EC60700            <1>     mov byte [ds:bx], byte 0
+   672 00000724 EBE9                <1>     jmp loop_start_55
+   673                              <1> loop_ended_55:
+   674 00000726 3E800701            <1>     add byte [ds:bx], byte 1
+   675 0000072A 83C301              <1>     add bx, 1
+   676                              <1> loop_start_56:
+   677 0000072D 3E8A07              <1>     mov al, byte [ds:bx]
+   678 00000730 08C0                <1>     or al, al
+   679 00000732 7410                <1>     jz loop_ended_56
+   680 00000734 83C3FF              <1>     add bx, -1
+   681 00000737 3E8007FF            <1>     add byte [ds:bx], byte 255
+   682 0000073B 83C301              <1>     add bx, 1
+   683 0000073E 3E8007FF            <1>     add byte [ds:bx], byte 255
+   684 00000742 EBE9                <1>     jmp loop_start_56
+   685                              <1> loop_ended_56:
+   686 00000744 83C3FF              <1>     add bx, -1
+   687                              <1> loop_start_57:
+   688 00000747 3E8A07              <1>     mov al, byte [ds:bx]
+   689 0000074A 08C0                <1>     or al, al
+   690 0000074C 7417                <1>     jz loop_ended_57
+   691 0000074E 3E8007FF            <1>     add byte [ds:bx], byte 255
+   692 00000752 83C301              <1>     add bx, 1
+   693 00000755 3E800701            <1>     add byte [ds:bx], byte 1
+   694 00000759 83C301              <1>     add bx, 1
+   695 0000075C 3E800701            <1>     add byte [ds:bx], byte 1
+   696 00000760 83C3FE              <1>     add bx, -2
+   697 00000763 EBE2                <1>     jmp loop_start_57
+   698                              <1> loop_ended_57:
+   699 00000765 83C302              <1>     add bx, 2
+   700                              <1> loop_start_58:
+   701 00000768 3E8A07              <1>     mov al, byte [ds:bx]
+   702 0000076B 08C0                <1>     or al, al
+   703 0000076D 7410                <1>     jz loop_ended_58
+   704 0000076F 3E8007FF            <1>     add byte [ds:bx], byte 255
+   705 00000773 83C3FE              <1>     add bx, -2
+   706 00000776 3E800701            <1>     add byte [ds:bx], byte 1
+   707 0000077A 83C302              <1>     add bx, 2
+   708 0000077D EBE9                <1>     jmp loop_start_58
+   709                              <1> loop_ended_58:
+   710 0000077F 83C3FF              <1>     add bx, -1
+   711                              <1> loop_start_59:
+   712 00000782 3E8A07              <1>     mov al, byte [ds:bx]
+   713 00000785 08C0                <1>     or al, al
+   714 00000787 7410                <1>     jz loop_ended_59
+   715 00000789 83C301              <1>     add bx, 1
+   716 0000078C 3E800701            <1>     add byte [ds:bx], byte 1
+   717 00000790 83C3FF              <1>     add bx, -1
+   718 00000793 3EC60700            <1>     mov byte [ds:bx], byte 0
+   719 00000797 EBE9                <1>     jmp loop_start_59
+   720                              <1> loop_ended_59:
+   721 00000799 3E800701            <1>     add byte [ds:bx], byte 1
+   722 0000079D 83C301              <1>     add bx, 1
+   723                              <1> loop_start_60:
+   724 000007A0 3E8A07              <1>     mov al, byte [ds:bx]
+   725 000007A3 08C0                <1>     or al, al
+   726 000007A5 7410                <1>     jz loop_ended_60
+   727 000007A7 83C3FF              <1>     add bx, -1
+   728 000007AA 3E8007FF            <1>     add byte [ds:bx], byte 255
+   729 000007AE 83C301              <1>     add bx, 1
+   730 000007B1 3E8007FF            <1>     add byte [ds:bx], byte 255
+   731 000007B5 EBE9                <1>     jmp loop_start_60
+   732                              <1> loop_ended_60:
+   733 000007B7 83C3FE              <1>     add bx, -2
+   734                              <1> loop_start_61:
+   735 000007BA 3E8A07              <1>     mov al, byte [ds:bx]
+   736 000007BD 08C0                <1>     or al, al
+   737 000007BF 7410                <1>     jz loop_ended_61
+   738 000007C1 3E8007FF            <1>     add byte [ds:bx], byte 255
+   739 000007C5 83C302              <1>     add bx, 2
+   740 000007C8 3E800701            <1>     add byte [ds:bx], byte 1
+   741 000007CC 83C3FE              <1>     add bx, -2
+   742 000007CF EBE9                <1>     jmp loop_start_61
+   743                              <1> loop_ended_61:
+   744 000007D1 83C301              <1>     add bx, 1
+   745                              <1> loop_start_62:
+   746 000007D4 3E8A07              <1>     mov al, byte [ds:bx]
+   747 000007D7 08C0                <1>     or al, al
+   748 000007D9 7410                <1>     jz loop_ended_62
+   749 000007DB 3E8007FF            <1>     add byte [ds:bx], byte 255
+   750 000007DF 83C3FF              <1>     add bx, -1
+   751 000007E2 3E800701            <1>     add byte [ds:bx], byte 1
+   752 000007E6 83C301              <1>     add bx, 1
+   753 000007E9 EBE9                <1>     jmp loop_start_62
+   754                              <1> loop_ended_62:
+   755 000007EB 83C301              <1>     add bx, 1
+   756                              <1> loop_start_63:
+   757 000007EE 3E8A07              <1>     mov al, byte [ds:bx]
+   758 000007F1 08C0                <1>     or al, al
+   759 000007F3 7410                <1>     jz loop_ended_63
+   760 000007F5 3E8007FF            <1>     add byte [ds:bx], byte 255
+   761 000007F9 83C3FF              <1>     add bx, -1
+   762 000007FC 3E800701            <1>     add byte [ds:bx], byte 1
+   763 00000800 83C301              <1>     add bx, 1
+   764 00000803 EBE9                <1>     jmp loop_start_63
+   765                              <1> loop_ended_63:
+   766 00000805 83C3FF              <1>     add bx, -1
+   767                              <1> loop_start_64:
+   768 00000808 3E8A07              <1>     mov al, byte [ds:bx]
+   769 0000080B 08C0                <1>     or al, al
+   770 0000080D 0F84A700            <1>     jz loop_ended_64
+   771 00000811 3EC60700            <1>     mov byte [ds:bx], byte 0
+   772 00000815 83C3FF              <1>     add bx, -1
+   773 00000818 3EC60700            <1>     mov byte [ds:bx], byte 0
+   774 0000081C 83C3FF              <1>     add bx, -1
+   775 0000081F 3EC60700            <1>     mov byte [ds:bx], byte 0
+   776 00000823 83C3FF              <1>     add bx, -1
+   777                              <1> loop_start_65:
+   778 00000826 3E8A07              <1>     mov al, byte [ds:bx]
+   779 00000829 08C0                <1>     or al, al
+   780 0000082B 7417                <1>     jz loop_ended_65
+   781 0000082D 3E8007FF            <1>     add byte [ds:bx], byte 255
+   782 00000831 83C301              <1>     add bx, 1
+   783 00000834 3E800701            <1>     add byte [ds:bx], byte 1
+   784 00000838 83C301              <1>     add bx, 1
+   785 0000083B 3E800701            <1>     add byte [ds:bx], byte 1
+   786 0000083F 83C3FE              <1>     add bx, -2
+   787 00000842 EBE2                <1>     jmp loop_start_65
+   788                              <1> loop_ended_65:
+   789 00000844 83C302              <1>     add bx, 2
+   790                              <1> loop_start_66:
+   791 00000847 3E8A07              <1>     mov al, byte [ds:bx]
+   792 0000084A 08C0                <1>     or al, al
+   793 0000084C 7410                <1>     jz loop_ended_66
+   794 0000084E 3E8007FF            <1>     add byte [ds:bx], byte 255
+   795 00000852 83C3FE              <1>     add bx, -2
+   796 00000855 3E800701            <1>     add byte [ds:bx], byte 1
+   797 00000859 83C302              <1>     add bx, 2
+   798 0000085C EBE9                <1>     jmp loop_start_66
+   799                              <1> loop_ended_66:
+   800 0000085E 3EC60701            <1>     mov byte [ds:bx], byte 1
+   801                              <1> loop_start_67:
+   802 00000862 3E8A07              <1>     mov al, byte [ds:bx]
+   803 00000865 08C0                <1>     or al, al
+   804 00000867 7410                <1>     jz loop_ended_67
+   805 00000869 3E8007FF            <1>     add byte [ds:bx], byte 255
+   806 0000086D 83C3FF              <1>     add bx, -1
+   807 00000870 3E8007FF            <1>     add byte [ds:bx], byte 255
+   808 00000874 83C301              <1>     add bx, 1
+   809 00000877 EBE9                <1>     jmp loop_start_67
+   810                              <1> loop_ended_67:
+   811 00000879 83C3FF              <1>     add bx, -1
+   812                              <1> loop_start_68:
+   813 0000087C 3E8A07              <1>     mov al, byte [ds:bx]
+   814 0000087F 08C0                <1>     or al, al
+   815 00000881 742B                <1>     jz loop_ended_68
+   816 00000883 3EC60700            <1>     mov byte [ds:bx], byte 0
+   817 00000887 83C3FF              <1>     add bx, -1
+   818 0000088A 3EC60708            <1>     mov byte [ds:bx], byte 8
+   819 0000088E 3E8A07              <1>     mov al, byte [ds:bx]
+   820 00000891 E899F7              <1>     call putc
+   821 00000894 3EC60720            <1>     mov byte [ds:bx], byte 32
+   822 00000898 3E8A07              <1>     mov al, byte [ds:bx]
+   823 0000089B E88FF7              <1>     call putc
+   824 0000089E 3EC60708            <1>     mov byte [ds:bx], byte 8
+   825 000008A2 3E8A07              <1>     mov al, byte [ds:bx]
+   826 000008A5 E885F7              <1>     call putc
+   827 000008A8 3EC60700            <1>     mov byte [ds:bx], byte 0
+   828 000008AC EBCE                <1>     jmp loop_start_68
+   829                              <1> loop_ended_68:
+   830 000008AE 3EC60700            <1>     mov byte [ds:bx], byte 0
+   831 000008B2 83C301              <1>     add bx, 1
+   832 000008B5 E950FF              <1>     jmp loop_start_64
+   833                              <1> loop_ended_64:
+   834 000008B8 83C3FF              <1>     add bx, -1
+   835                              <1> loop_start_69:
+   836 000008BB 3E8A07              <1>     mov al, byte [ds:bx]
+   837 000008BE 08C0                <1>     or al, al
+   838 000008C0 0F84EA01            <1>     jz loop_ended_69
+   839 000008C4 3EC60700            <1>     mov byte [ds:bx], byte 0
+   840 000008C8 83C3FF              <1>     add bx, -1
+   841                              <1> loop_start_70:
+   842 000008CB 3E8A07              <1>     mov al, byte [ds:bx]
+   843 000008CE 08C0                <1>     or al, al
+   844 000008D0 7417                <1>     jz loop_ended_70
+   845 000008D2 3E8007FF            <1>     add byte [ds:bx], byte 255
+   846 000008D6 83C301              <1>     add bx, 1
+   847 000008D9 3E800701            <1>     add byte [ds:bx], byte 1
+   848 000008DD 83C301              <1>     add bx, 1
+   849 000008E0 3E800701            <1>     add byte [ds:bx], byte 1
+   850 000008E4 83C3FE              <1>     add bx, -2
+   851 000008E7 EBE2                <1>     jmp loop_start_70
+   852                              <1> loop_ended_70:
+   853 000008E9 83C302              <1>     add bx, 2
+   854                              <1> loop_start_71:
+   855 000008EC 3E8A07              <1>     mov al, byte [ds:bx]
+   856 000008EF 08C0                <1>     or al, al
+   857 000008F1 7410                <1>     jz loop_ended_71
+   858 000008F3 3E8007FF            <1>     add byte [ds:bx], byte 255
+   859 000008F7 83C3FE              <1>     add bx, -2
+   860 000008FA 3E800701            <1>     add byte [ds:bx], byte 1
+   861 000008FE 83C302              <1>     add bx, 2
+   862 00000901 EBE9                <1>     jmp loop_start_71
+   863                              <1> loop_ended_71:
+   864 00000903 3EC6070D            <1>     mov byte [ds:bx], byte 13
+   865                              <1> loop_start_72:
+   866 00000907 3E8A07              <1>     mov al, byte [ds:bx]
+   867 0000090A 08C0                <1>     or al, al
+   868 0000090C 7410                <1>     jz loop_ended_72
+   869 0000090E 3E8007FF            <1>     add byte [ds:bx], byte 255
+   870 00000912 83C3FF              <1>     add bx, -1
+   871 00000915 3E8007FF            <1>     add byte [ds:bx], byte 255
+   872 00000919 83C301              <1>     add bx, 1
+   873 0000091C EBE9                <1>     jmp loop_start_72
+   874                              <1> loop_ended_72:
+   875 0000091E 83C3FF              <1>     add bx, -1
+   876                              <1> loop_start_73:
+   877 00000921 3E8A07              <1>     mov al, byte [ds:bx]
+   878 00000924 08C0                <1>     or al, al
+   879 00000926 7410                <1>     jz loop_ended_73
+   880 00000928 83C301              <1>     add bx, 1
+   881 0000092B 3E800701            <1>     add byte [ds:bx], byte 1
+   882 0000092F 83C3FF              <1>     add bx, -1
+   883 00000932 3EC60700            <1>     mov byte [ds:bx], byte 0
+   884 00000936 EBE9                <1>     jmp loop_start_73
+   885                              <1> loop_ended_73:
+   886 00000938 3E800701            <1>     add byte [ds:bx], byte 1
+   887 0000093C 83C301              <1>     add bx, 1
+   888                              <1> loop_start_74:
+   889 0000093F 3E8A07              <1>     mov al, byte [ds:bx]
+   890 00000942 08C0                <1>     or al, al
+   891 00000944 7410                <1>     jz loop_ended_74
+   892 00000946 83C3FF              <1>     add bx, -1
+   893 00000949 3E8007FF            <1>     add byte [ds:bx], byte 255
+   894 0000094D 83C301              <1>     add bx, 1
+   895 00000950 3E8007FF            <1>     add byte [ds:bx], byte 255
+   896 00000954 EBE9                <1>     jmp loop_start_74
+   897                              <1> loop_ended_74:
+   898 00000956 83C3FF              <1>     add bx, -1
+   899                              <1> loop_start_75:
+   900 00000959 3E8A07              <1>     mov al, byte [ds:bx]
+   901 0000095C 08C0                <1>     or al, al
+   902 0000095E 7417                <1>     jz loop_ended_75
+   903 00000960 3E8007FF            <1>     add byte [ds:bx], byte 255
+   904 00000964 83C301              <1>     add bx, 1
+   905 00000967 3E800701            <1>     add byte [ds:bx], byte 1
+   906 0000096B 83C301              <1>     add bx, 1
+   907 0000096E 3E800701            <1>     add byte [ds:bx], byte 1
+   908 00000972 83C3FE              <1>     add bx, -2
+   909 00000975 EBE2                <1>     jmp loop_start_75
+   910                              <1> loop_ended_75:
+   911 00000977 83C302              <1>     add bx, 2
+   912                              <1> loop_start_76:
+   913 0000097A 3E8A07              <1>     mov al, byte [ds:bx]
+   914 0000097D 08C0                <1>     or al, al
+   915 0000097F 7410                <1>     jz loop_ended_76
+   916 00000981 3E8007FF            <1>     add byte [ds:bx], byte 255
+   917 00000985 83C3FE              <1>     add bx, -2
+   918 00000988 3E800701            <1>     add byte [ds:bx], byte 1
+   919 0000098C 83C302              <1>     add bx, 2
+   920 0000098F EBE9                <1>     jmp loop_start_76
+   921                              <1> loop_ended_76:
+   922 00000991 83C3FF              <1>     add bx, -1
+   923                              <1> loop_start_77:
+   924 00000994 3E8A07              <1>     mov al, byte [ds:bx]
+   925 00000997 08C0                <1>     or al, al
+   926 00000999 7410                <1>     jz loop_ended_77
+   927 0000099B 83C301              <1>     add bx, 1
+   928 0000099E 3E800701            <1>     add byte [ds:bx], byte 1
+   929 000009A2 83C3FF              <1>     add bx, -1
+   930 000009A5 3EC60700            <1>     mov byte [ds:bx], byte 0
+   931 000009A9 EBE9                <1>     jmp loop_start_77
+   932                              <1> loop_ended_77:
+   933 000009AB 3E800701            <1>     add byte [ds:bx], byte 1
+   934 000009AF 83C301              <1>     add bx, 1
+   935                              <1> loop_start_78:
+   936 000009B2 3E8A07              <1>     mov al, byte [ds:bx]
+   937 000009B5 08C0                <1>     or al, al
+   938 000009B7 7410                <1>     jz loop_ended_78
+   939 000009B9 83C3FF              <1>     add bx, -1
+   940 000009BC 3E8007FF            <1>     add byte [ds:bx], byte 255
+   941 000009C0 83C301              <1>     add bx, 1
+   942 000009C3 3E8007FF            <1>     add byte [ds:bx], byte 255
+   943 000009C7 EBE9                <1>     jmp loop_start_78
+   944                              <1> loop_ended_78:
+   945 000009C9 83C3FE              <1>     add bx, -2
+   946                              <1> loop_start_79:
+   947 000009CC 3E8A07              <1>     mov al, byte [ds:bx]
+   948 000009CF 08C0                <1>     or al, al
+   949 000009D1 7410                <1>     jz loop_ended_79
+   950 000009D3 3E8007FF            <1>     add byte [ds:bx], byte 255
+   951 000009D7 83C302              <1>     add bx, 2
+   952 000009DA 3E800701            <1>     add byte [ds:bx], byte 1
+   953 000009DE 83C3FE              <1>     add bx, -2
+   954 000009E1 EBE9                <1>     jmp loop_start_79
+   955                              <1> loop_ended_79:
+   956 000009E3 83C301              <1>     add bx, 1
+   957                              <1> loop_start_80:
+   958 000009E6 3E8A07              <1>     mov al, byte [ds:bx]
+   959 000009E9 08C0                <1>     or al, al
+   960 000009EB 7410                <1>     jz loop_ended_80
+   961 000009ED 3E8007FF            <1>     add byte [ds:bx], byte 255
+   962 000009F1 83C3FF              <1>     add bx, -1
+   963 000009F4 3E800701            <1>     add byte [ds:bx], byte 1
+   964 000009F8 83C301              <1>     add bx, 1
+   965 000009FB EBE9                <1>     jmp loop_start_80
+   966                              <1> loop_ended_80:
+   967 000009FD 83C301              <1>     add bx, 1
+   968                              <1> loop_start_81:
+   969 00000A00 3E8A07              <1>     mov al, byte [ds:bx]
+   970 00000A03 08C0                <1>     or al, al
+   971 00000A05 7410                <1>     jz loop_ended_81
+   972 00000A07 3E8007FF            <1>     add byte [ds:bx], byte 255
+   973 00000A0B 83C3FF              <1>     add bx, -1
+   974 00000A0E 3E800701            <1>     add byte [ds:bx], byte 1
+   975 00000A12 83C301              <1>     add bx, 1
+   976 00000A15 EBE9                <1>     jmp loop_start_81
+   977                              <1> loop_ended_81:
+   978 00000A17 83C3FF              <1>     add bx, -1
+   979                              <1> loop_start_82:
+   980 00000A1A 3E8A07              <1>     mov al, byte [ds:bx]
+   981 00000A1D 08C0                <1>     or al, al
+   982 00000A1F 7432                <1>     jz loop_ended_82
+   983 00000A21 3EC60700            <1>     mov byte [ds:bx], byte 0
+   984 00000A25 83C3FF              <1>     add bx, -1
+   985 00000A28 3EC60700            <1>     mov byte [ds:bx], byte 0
+   986 00000A2C 83C3FF              <1>     add bx, -1
+   987 00000A2F 3EC6070A            <1>     mov byte [ds:bx], byte 10
+   988 00000A33 3E8A07              <1>     mov al, byte [ds:bx]
+   989 00000A36 E8F4F5              <1>     call putc
+   990 00000A39 3EC6070D            <1>     mov byte [ds:bx], byte 13
+   991 00000A3D 3E8A07              <1>     mov al, byte [ds:bx]
+   992 00000A40 E8EAF5              <1>     call putc
+   993 00000A43 3EC60700            <1>     mov byte [ds:bx], byte 0
+   994 00000A47 83C301              <1>     add bx, 1
+   995 00000A4A 3EC60700            <1>     mov byte [ds:bx], byte 0
+   996 00000A4E 83C301              <1>     add bx, 1
+   997 00000A51 EBC7                <1>     jmp loop_start_82
+   998                              <1> loop_ended_82:
+   999 00000A53 83C3FF              <1>     add bx, -1
+  1000                              <1> loop_start_83:
+  1001 00000A56 3E8A07              <1>     mov al, byte [ds:bx]
+  1002 00000A59 08C0                <1>     or al, al
+  1003 00000A5B 744E                <1>     jz loop_ended_83
+  1004 00000A5D 3EC60700            <1>     mov byte [ds:bx], byte 0
+  1005 00000A61 83C3FF              <1>     add bx, -1
+  1006                              <1> loop_start_84:
+  1007 00000A64 3E8A07              <1>     mov al, byte [ds:bx]
+  1008 00000A67 08C0                <1>     or al, al
+  1009 00000A69 7417                <1>     jz loop_ended_84
+  1010 00000A6B 3E8007FF            <1>     add byte [ds:bx], byte 255
+  1011 00000A6F 83C301              <1>     add bx, 1
+  1012 00000A72 3E800701            <1>     add byte [ds:bx], byte 1
+  1013 00000A76 83C301              <1>     add bx, 1
+  1014 00000A79 3E800701            <1>     add byte [ds:bx], byte 1
+  1015 00000A7D 83C3FE              <1>     add bx, -2
+  1016 00000A80 EBE2                <1>     jmp loop_start_84
+  1017                              <1> loop_ended_84:
+  1018 00000A82 83C302              <1>     add bx, 2
+  1019                              <1> loop_start_85:
+  1020 00000A85 3E8A07              <1>     mov al, byte [ds:bx]
+  1021 00000A88 08C0                <1>     or al, al
+  1022 00000A8A 7410                <1>     jz loop_ended_85
+  1023 00000A8C 3E8007FF            <1>     add byte [ds:bx], byte 255
+  1024 00000A90 83C3FE              <1>     add bx, -2
+  1025 00000A93 3E800701            <1>     add byte [ds:bx], byte 1
+  1026 00000A97 83C302              <1>     add bx, 2
+  1027 00000A9A EBE9                <1>     jmp loop_start_85
+  1028                              <1> loop_ended_85:
+  1029 00000A9C 83C3FF              <1>     add bx, -1
+  1030 00000A9F 3E8A07              <1>     mov al, byte [ds:bx]
+  1031 00000AA2 E888F5              <1>     call putc
+  1032 00000AA5 3EC60700            <1>     mov byte [ds:bx], byte 0
+  1033 00000AA9 EBAB                <1>     jmp loop_start_83
+  1034                              <1> loop_ended_83:
+  1035 00000AAB E90DFE              <1>     jmp loop_start_69
+  1036                              <1> loop_ended_69:
+  1037 00000AAE 83C3FF              <1>     add bx, -1
+  1038 00000AB1 E9F6FB              <1>     jmp loop_start_51
+  1039                              <1> loop_ended_51:
+  1040 00000AB4 3E8007FF            <1>     add byte [ds:bx], byte 255
+  1041                              <1> loop_start_86:
+  1042 00000AB8 3E8A07              <1>     mov al, byte [ds:bx]
+  1043 00000ABB 08C0                <1>     or al, al
+  1044 00000ABD 740D                <1>     jz loop_ended_86
+  1045 00000ABF 3E800701            <1>     add byte [ds:bx], byte 1
+  1046 00000AC3 83C3FF              <1>     add bx, -1
+  1047 00000AC6 3E8007FF            <1>     add byte [ds:bx], byte 255
+  1048 00000ACA EBEC                <1>     jmp loop_start_86
+  1049                              <1> loop_ended_86:
+  1050 00000ACC 83C301              <1>     add bx, 1
+  1051                              <1> loop_start_87:
+  1052 00000ACF 3E8A07              <1>     mov al, byte [ds:bx]
+  1053 00000AD2 08C0                <1>     or al, al
+  1054 00000AD4 7405                <1>     jz loop_ended_87
+  1055 00000AD6 83C301              <1>     add bx, 1
+  1056 00000AD9 EBF4                <1>     jmp loop_start_87
+  1057                              <1> loop_ended_87:
+  1058 00000ADB 3EC6070A            <1>     mov byte [ds:bx], byte 10
+  1059 00000ADF 83C301              <1>     add bx, 1
+  1060 00000AE2 3EC6070D            <1>     mov byte [ds:bx], byte 13
+  1061                              <1> loop_start_88:
+  1062 00000AE6 3E8A07              <1>     mov al, byte [ds:bx]
+  1063 00000AE9 08C0                <1>     or al, al
+  1064 00000AEB 7405                <1>     jz loop_ended_88
+  1065 00000AED 83C3FF              <1>     add bx, -1
+  1066 00000AF0 EBF4                <1>     jmp loop_start_88
+  1067                              <1> loop_ended_88:
+  1068 00000AF2 3E800701            <1>     add byte [ds:bx], byte 1
+  1069 00000AF6 83C301              <1>     add bx, 1
+  1070                              <1> loop_start_89:
+  1071 00000AF9 3E8A07              <1>     mov al, byte [ds:bx]
+  1072 00000AFC 08C0                <1>     or al, al
+  1073 00000AFE 740F                <1>     jz loop_ended_89
+  1074 00000B00 3E8A07              <1>     mov al, byte [ds:bx]
+  1075 00000B03 E827F5              <1>     call putc
+  1076 00000B06 3EC60700            <1>     mov byte [ds:bx], byte 0
+  1077 00000B0A 83C301              <1>     add bx, 1
+  1078 00000B0D EBEA                <1>     jmp loop_start_89
+  1079                              <1> loop_ended_89:
+  1080 00000B0F 3E8007FF            <1>     add byte [ds:bx], byte 255
+  1081                              <1> loop_start_90:
+  1082 00000B13 3E8A07              <1>     mov al, byte [ds:bx]
+  1083 00000B16 08C0                <1>     or al, al
+  1084 00000B18 740D                <1>     jz loop_ended_90
+  1085 00000B1A 3E800701            <1>     add byte [ds:bx], byte 1
+  1086 00000B1E 83C3FF              <1>     add bx, -1
+  1087 00000B21 3E8007FF            <1>     add byte [ds:bx], byte 255
+  1088 00000B25 EBEC                <1>     jmp loop_start_90
+  1089                              <1> loop_ended_90:
+  1090 00000B27 83C3FF              <1>     add bx, -1
+  1091 00000B2A E9DBFA              <1>     jmp loop_start_47
+  1092                              <1> loop_ended_47:
+    72 00000B2D 61                      	popa
+    73 00000B2E C3                      	ret
     74                                  tape:	

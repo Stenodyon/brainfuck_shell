@@ -41,19 +41,29 @@
 : wnz {<[>} ; ( while not zero )
 : loop {<]} ;
 
+: = - not ;
+
 ( OS STUFF )
 
 : print_string {<[<]+>>} wnz . {>>} loop {-[+<-]} ;
 
-: repeat over {<<<[-]>[-[>]} dup {<[<]>]>[>]} ;
+: repeat1 over {<<<[-]>--[[>]} dup {<[<]>-]>[-<+<+>>]<<[->>+<<]>[>]} ;
+: repeat
+dup 0 = ife
+    drop drop
+else
+    dup 1 = ife
+        drop 0 swap
+    else
+        repeat1
+    efi
+efi ;
 
 ( !!!! TODO strcpy and strcmp )
 
 : greet 0 "Hello, Stenodyon" 10 13
 "=" 80 repeat 10 13
 print_string print_string ;
-
-: = - not ;
 
 : get_string 1
 wnz getc
