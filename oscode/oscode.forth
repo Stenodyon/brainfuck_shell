@@ -71,6 +71,35 @@ efi ;
 {< [[->>+[>]>+<<[<]<] >>[>]>[>]< [[->+<]<] <[<]<<]}
 {>>>[[-<<+>>]>]>>[[-<<<+>>>]>]<<<} ;
 
+: strdrop {<[[-]<]} ;
+
+(str str -- char)
+(Puts the last char of the 2nd string over the top of the stack)
+: str2lastover
+{<[<]< [->[>]>[>]>+<<[<]<]} (>[>]>[>]>>} Cuts it)
+{>> [[-<+>]>]>[-<<+>>]<} ;
+
+: strcmp
+1 wnz drop
+    dup not ife (if first string empty)
+        str2lastover not ife (if second string empty)
+            strdrop 1 0
+        else
+            strdrop strdrop 0 0
+        efi
+    else
+        str2lastover dup not ife (if second string empty)
+            drop strdrop 0 0
+        else
+            = ife
+                1
+            else
+                strdrop strdrop 0 0
+            efi
+        efi
+    efi
+loop ;
+
 : greet 0 "Hello, Stenodyon" 10 13
 "=" 80 repeat 10 13
 print_string print_string ;
@@ -88,7 +117,6 @@ wnz getc
     efi
 loop {-[+<-]>[>]} 10 13 ;
 
-(: main greet 1 wnz 0 "stenodyon$ " print_string get_string print_string loop ;)
-: main 0 "test" strcpy print_string print_string ;
+: main greet 1 wnz 0 "stenodyon$ " print_string get_string print_string loop ;
 
 main

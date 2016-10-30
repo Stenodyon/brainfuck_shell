@@ -86,10 +86,10 @@ class Interpreter:
         self.mem[self.memptr] = c
 
     def memdump(self):
-        bot = self.memptr - 10
+        bot = self.memptr - 15
         if bot < 0:
             bot = 0
-        top = self.memptr + 10
+        top = self.memptr + 15
         if bot >= len(self.mem):
             bot = len(self.mem) - 1
         for value in self.mem[bot:top]:
@@ -156,7 +156,7 @@ if __name__ == "__main__":
         stdscr.clear()
         with open( "prog.bf", "r" ) as f:
             rawprog = f.read()
-        inter = Interpreter(rawprog, debug=False)
+        inter = Interpreter(rawprog, debug=True)
         inter.run()
         stdscr.addstr("\n\nProgram terminated\n")
         stdscr.getch();
