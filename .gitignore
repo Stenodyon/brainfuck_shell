@@ -10,3 +10,4 @@ boot.s
 os.img
 oslist.txt
 bfos.img
+__pycache__/

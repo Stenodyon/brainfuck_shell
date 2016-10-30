@@ -50,13 +50,13 @@
 ( !!!! TODO strcpy and strcmp )
 
 : greet 0 "Hello, Stenodyon" 10 13
-"=" 80 repeat
+"=" 80 repeat 10 13
 print_string print_string ;
 
 : = - not ;
 
 : get_string 1
-wnz getc 
+wnz getc
     dup 8 = ife ( 8 = backspace )
         drop dup 1 - if drop 8 . " " . 8 . fi
     else
