@@ -38,23 +38,29 @@
 : else 0 fi if ;
 : efi  fi ;
 
-: wnz {<[>} ;
+: wnz {<[>} ; ( while not zero )
 : loop {<]} ;
 
 ( OS STUFF )
 
 : print_string {<[<]+>>} wnz . {>>} loop {-[+<-]} ;
 
-: greet 0 "Hello, Stenodyon" 10 13 print_string ;
+: repeat over {<<<[-]>[-[>]} dup {<[<]>]>[>]} ;
+
+( !!!! TODO strcpy and strcmp )
+
+: greet 0 "Hello, Stenodyon" 10 13
+"=" 80 repeat
+print_string print_string ;
 
 : = - not ;
 
-: get_string ">" . 1
+: get_string 1
 wnz getc 
-    dup 8 = ife
+    dup 8 = ife ( 8 = backspace )
         drop dup 1 - if drop 8 . " " . 8 . fi
     else
-        dup 13 = ife
+        dup 13 = ife ( 13 = return )
             drop newline 0
         else
 	    dup .
@@ -62,5 +68,5 @@ wnz getc
     efi
 loop {-[+<-]>[>]} 10 13 ;
 
-: main greet 1 wnz get_string print_string loop ;
+: main greet 1 wnz 0 "stenodyon$ " print_string get_string print_string loop ;
 main

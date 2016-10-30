@@ -1,5 +1,12 @@
 *~
 bochs-2.6.8/
 nasm-2.12/
-execdump.txt
 bin/
+execdump.txt
+oscode.bf
+oscode.asm
+boot.img
+boot.s
+os.img
+oslist.txt
+bfos.img

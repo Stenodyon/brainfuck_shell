@@ -12,7 +12,7 @@ bfos.img: .FORCE
 	@echo ""
 	python3 bfcompiler/compiler.py oscode.bf -o oscode.asm
 #	cat -n oscode.asm
-	$(NASM) bfos.asm -f bin -o boot.img
+	$(NASM) boot.asm -f bin -o boot.img
 	$(NASM) os.asm -f bin -o os.img -l oslist.txt
 	cat boot.img os.img > bfos.img
 #	python3 upload.py bfos.img -o c.img
@@ -24,6 +24,4 @@ run: bfos.img
 
 .PHONY: clean
 clean:
-	rm bfos.img
-	rm os.img
-	rm boot.img
+	rm bfos.img os.img boot.img
