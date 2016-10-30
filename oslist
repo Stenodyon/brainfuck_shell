@@ -1,5 +1,5 @@
      1                                  	%define memsize 200
-     2                                  	
+     2                                  
      3                                  org	0x0000
      4                                  
      5                                  bits 	16
@@ -11,7 +11,7 @@
     11 00000008 E80D00                  	call print
     12                                  
     13 0000000B E87D00                  	call execute
-    14                                  	
+    14                                  
     15                                  end:
     16 0000000E BE[5C00]                	mov si, stopmsg
     17 00000011 E80400                  	call print
@@ -21,7 +21,7 @@
     21 00000016 EBFC                    	jmp end_loop
     22                                  
     23                                  ;; ======================= FUNCTIONS ================================
-    24                                  	
+    24                                  
     25                                  print:				;prints a string with a newline
     26 00000018 60                      	pusha
     27 00000019 89E5                    	mov bp, sp
@@ -3994,4 +3994,4 @@
   3917                              <1> loop_ended_110:
     72 0000258E 61                      	popa
     73 0000258F C3                      	ret
-    74                                  tape:	
+    74                                  tape:

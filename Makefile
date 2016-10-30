@@ -27,10 +27,14 @@ boot.img: boot.asm
 
 .FORCE:
 
-.PHONY: run
-run: bfos.img
+.PHONY: run clean ckernel
+
+ckernel: cos.img boot.img
+	cat boot.img cos.img > bfos.img
+	truncate -s 10321920 bfos.img
+
+run:
 	$(BOCHS) -qf newbochsconfig | tee execdump.txt
 
-.PHONY: clean
 clean:
 	-rm bfos.img os.img boot.img oslist oscode/oscode.bf oscode/oscode.asm

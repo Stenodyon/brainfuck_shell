@@ -1,6 +1,5 @@
 	%define memsize 200
-
-org	0x0000
+extern kernel_main
 
 bits 	16
 
@@ -66,9 +65,6 @@ abort:
 	abrtmsg db "ERROR execution aborted", 10, 13, 0
 
 execute:
-	pusha
-	mov bx, tape
-	%include "oscode.asm"
-	popa
-	ret
+    call kernel_main
+    ret
 tape:
