@@ -115,8 +115,21 @@ wnz getc
 	    dup .
 	efi
     efi
-loop {-[+<-]>[>]} 10 13 ;
+loop {-[+<-]>[>]} ;
 
-: main greet 1 wnz 0 "stenodyon$ " print_string get_string print_string loop ;
+: main
+greet
+1 wnz
+    0 "stenodyon$ " print_string
+    get_string strcpy 0 "exit" strcmp ife
+        strdrop drop 0
+    else
+        strcpy 0 "ls" strcmp ife
+            strdrop 0 "Not implemented" 10 13 print_string
+        else
+            ": command not found" 10 13 print_string
+        efi
+    efi
+loop ;
 
 main

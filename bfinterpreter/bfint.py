@@ -133,6 +133,9 @@ class Interpreter:
 
 if __name__ == "__main__":
     from curses import wrapper, noecho
+    with open( "prog.bf", "r" ) as f:
+        rawprog = f.read()
+    inter = Interpreter(rawprog, debug=False)
     def main(stdscr):
         global output, input
         noecho()
@@ -154,10 +157,8 @@ if __name__ == "__main__":
         output = _output
         input = _input
         stdscr.clear()
-        with open( "prog.bf", "r" ) as f:
-            rawprog = f.read()
-        inter = Interpreter(rawprog, debug=True)
         inter.run()
         stdscr.addstr("\n\nProgram terminated\n")
         stdscr.getch();
     wrapper(main)
+    inter.memdump()

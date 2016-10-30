@@ -2,11 +2,12 @@
 NASM=bin/nasm
 BOCHS=bin/bochs
 
-default: bfos.img
+default: .FORCE bfos.img
 
 bfos.img: os.img boot.img
 	cat boot.img os.img > bfos.img
 #	python3 upload.py bfos.img -o c.img
+	@ls -l bfos.img
 	truncate -s 10321920 bfos.img
 
 oscode/oscode.bf: oscode/oscode.forth
