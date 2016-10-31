@@ -19,13 +19,17 @@ oscode.asm: oscode/oscode.bf
 	python3 bfcompiler/compiler.py oscode/oscode.bf -o oscode.asm
 #	cat -n oscode.asm
 
-os.img: os.asm oscode.asm
+os.img: os.asm oscode.asm kernel.o
 	$(NASM) os.asm -f elf64 -o os.o -l oslist
-	ld -T linker.ld -o _os.img -O2 -nostdlib os.o
+	$(NASM) entry.asm -f elf64 -o entry.o
+	ld -T linker.ld -o _os.img -O2 -nostdlib entry.o kernel.o os.o
 	dd bs=1280 skip=1 if=_os.img of=os.img # Remove the elf header
 
 boot.img: boot.asm
 	$(NASM) boot.asm -f bin -o boot.img -l bootlist
+
+%.o: %.c
+	gcc -c $< -o $@ -std=gnu99 -ffreestanding -O2 -Wall -Wextra
 
 .FORCE:
 

@@ -22,6 +22,8 @@ bits 32
 %include "scancodes.asm"
 %include "a20.asm"
 
+extern kernel_main
+
 pmode:
     mov ax, 0x10
     mov ds, ax
@@ -32,6 +34,8 @@ pmode:
 	call print
 
     call enable_A20
+
+    call kernel_main
 
 	call execute
 
