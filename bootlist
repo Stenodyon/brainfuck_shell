@@ -1,0 +1,83 @@
+     1                                  	%define loc 0x50
+     2                                  	%define drive 0x80
+     3                                  	%define os_sect 2
+     4                                  
+     5                                  org	 0x7c00			;Bootloaders are loaded at 0x7c0:0000
+     6                                  
+     7                                  bits	 16
+     8                                  
+     9                                  start:
+    10 00000000 8CC8                    	mov ax, cs
+    11 00000002 8ED8                    	mov ds, ax
+    12 00000004 8EC0                    	mov es, ax
+    13                                  
+    14 00000006 B003                    	mov al, 03h
+    15 00000008 B400                    	mov ah, 0
+    16 0000000A CD10                    	int 10h			;set screen mode 80x25
+    17                                  
+    18 0000000C BE[5800]                	mov si, msg
+    19 0000000F E83100                  	call _print
+    20                                  
+    21 00000012 B400                    	mov ah, 0
+    22 00000014 CD16                    	int 16h			;wait for keypress
+    23                                  
+    24 00000016 B85000                  	mov ax, loc
+    25 00000019 8EC0                    	mov es, ax
+    26 0000001B B102                    	mov cl, os_sect		;sector containing os
+    27 0000001D B010                    	mov al, 0x10		;number of sectors to load
+    28                                  
+    29 0000001F E80500                  	call loadsector
+    30                                  
+    31 00000022 EA00005000              	jmp loc:0x0		;start the program
+    32                                  
+    33                                  loadsector:
+    34 00000027 BB0000                  	mov bx, 0		; es:bx = buffer address pointer
+    35                                  	;; dl : drive
+    36                                  	;; 0x00 : First floppy
+    37                                  	;; 0x01 : Second floppy
+    38                                  	;; 0x80 : First hard drive   <- this one
+    39                                  	;; 0x81 : Second hard drive
+    40 0000002A B280                    	mov dl, drive
+    41 0000002C B600                    	mov dh, 0		; Head (whatever that means)
+    42 0000002E B500                    	mov ch, 0		; Cylinder
+    43 00000030 B402                    	mov ah, 2		; ah = 0x02 : Read sectors from drive
+    44 00000032 CD13                    	int 0x13		;load sector from image to RAM
+    45 00000034 7201                    	jc err
+    46 00000036 C3                      	ret
+    47                                  err:
+    48 00000037 BE[8E00]                	mov si, erro
+    49 0000003A E80600                  	call _print
+    50 0000003D B400                    	mov ah, 0
+    51 0000003F CD16                    	int 16h
+    52 00000041 CD19                    	int 19h			;reboot
+    53                                  
+    54                                  _print:
+    55 00000043 60                      	pusha
+    56 00000044 89E5                    	mov bp, sp
+    57                                  _cont:
+    58 00000046 AC                      	lodsb
+    59 00000047 08C0                    	or al, al
+    60 00000049 7409                    	jz _dne
+    61 0000004B B40E                    	mov ah, 0x0e
+    62 0000004D BB0000                  	mov bx, 0
+    63 00000050 CD10                    	int 10h
+    64 00000052 EBF2                    	jmp _cont
+    65                                  _dne:
+    66 00000054 89EC                    	mov sp, bp
+    67 00000056 61                      	popa
+    68 00000057 C3                      	ret
+    69                                  
+    70 00000058 426F6F74696E672073-     	msg db "Booting successful..", 10, 13, "Press any key to continue !", 10, 13, 10, 13, 0
+    70 00000061 75636365737366756C-
+    70 0000006A 2E2E0A0D5072657373-
+    70 00000073 20616E79206B657920-
+    70 0000007C 746F20636F6E74696E-
+    70 00000085 756520210A0D0A0D00 
+    71 0000008E 4572726F72206C6F61-     	erro db "Error loading sector ", 10, 13, 0
+    71 00000097 64696E672073656374-
+    71 000000A0 6F72200A0D00       
+    72                                  	;; $      = current line
+    73                                  	;; $$     = address of first instruction (should be 0x7c00)
+    74                                  	;; $ - $$ = number of bytes since the start
+    75 000000A6 00<rept>                times 510 - ($-$$) db 0
+    76 000001FE 55AA                    	dw 0xaa55

@@ -19,11 +19,11 @@ oscode.asm: oscode/oscode.bf
 	python3 bfcompiler/compiler.py oscode/oscode.bf -o oscode.asm
 #	cat -n oscode.asm
 
-os.img: os.asm
+os.img: os.asm oscode.asm
 	$(NASM) os.asm -f bin -o os.img -l oslist
 
 boot.img: boot.asm
-	$(NASM) boot.asm -f bin -o boot.img
+	$(NASM) boot.asm -f bin -o boot.img -l bootlist
 
 .FORCE:
 
@@ -37,4 +37,4 @@ run:
 	$(BOCHS) -qf newbochsconfig | tee execdump.txt
 
 clean:
-	-rm bfos.img os.img boot.img oslist oscode/oscode.bf oscode/oscode.asm
+	-rm bfos.img os.img boot.img oslist oscode/oscode.bf oscode.asm

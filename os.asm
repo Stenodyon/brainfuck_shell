@@ -20,6 +20,8 @@ main:
 
 bits 32
 
+%include "scancodes.asm"
+
 pmode:
     mov ax, 0x10
     mov ds, ax
@@ -28,7 +30,6 @@ pmode:
     mov dword [0xb8000], 0x07690748
 	mov si, hello
 	call print
-    jmp end_loop
 
 	call execute
 
@@ -57,7 +58,7 @@ dne:
 	ret
 
 cursor:
-    db 0x00, 0x04
+    db 0x00, 0x03
 
 ; Advances the cursor by 1
 _advance_cursor:
@@ -128,12 +129,27 @@ putc_nextline:
     ret
 
 getc:
-	pusha
-	;; INT 0x16, AH=0x00 : read keypress
-	mov ah, 0x00
-	int 0x16
-	mov [bx], byte al
-	popa
+    push eax
+    push edx
+    xor dl, dl
+    xor eax, eax
+getc_loop:
+    in al, 0x60
+    cmp al, dl
+    je getc_loop
+    mov dl, al
+    cmp dl, 0
+    jg getc_end
+    jmp getc_loop
+getc_end:
+    push ebx
+    mov ebx, scancode
+    add ebx, eax
+    mov al, byte [ebx]
+    pop ebx
+    mov [ebx], byte al
+    pop edx
+    pop eax
 	ret
 
 abort:
