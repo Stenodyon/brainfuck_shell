@@ -21,6 +21,7 @@ main:
 bits 32
 
 %include "scancodes.asm"
+%include "a20.asm"
 
 pmode:
     mov ax, 0x10
@@ -30,6 +31,8 @@ pmode:
     mov dword [0xb8000], 0x07690748
 	mov si, hello
 	call print
+
+    call enable_A20
 
 	call execute
 
@@ -128,20 +131,42 @@ putc_nextline:
     call _next_line
     ret
 
+%define ALT   0x01
+%define CTRL  0x02
+%define SHIFT 0x04
+%define K_ALT_L   0x38
+%define K_CTRL_L  0x2A
+%define K_SHIFT_L 0x1D
+key_flags:
+    db 0
+set_key_flag:
+    or byte [key_flags], al
+    ret
+getc_lastchar:
+    db 0
 getc:
     push eax
     push edx
-    xor dl, dl
     xor eax, eax
+    mov dl, byte [getc_lastchar]
 getc_loop:
     in al, 0x60
     cmp al, dl
     je getc_loop
     mov dl, al
-    cmp dl, 0
-    jg getc_end
+    test dl, 0x80
+    jz getc_end
     jmp getc_loop
 getc_end:
+    mov byte [getc_lastchar], dl
+    push dl
+    and dl, 0x7F ; Remove last bit
+    cmp dl, K_ALT_L
+    jne _getc_notalt
+    mov al, ALT
+    call set_key_flag
+_getc_notalt:
+    pop dl
     push ebx
     mov ebx, scancode
     add ebx, eax

@@ -1,5 +1,6 @@
 
 scancode:
+    db 0x00 ; *Unused*
     db 0x00 ; Escape
     db  '1'
     db  '2'
