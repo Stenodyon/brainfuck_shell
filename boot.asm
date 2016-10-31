@@ -1,4 +1,4 @@
-	%define loc 0x1000
+	%define loc 0x50
 	%define drive 0x80
 	%define os_sect 2
 
@@ -27,8 +27,8 @@ start:
 	mov al, 0x10		;number of sectors to load
 
 	call loadsector
-	
-	jmp loc:0x0000		;start the program
+
+	jmp loc:0x0		;start the program
 
 loadsector:
 	mov bx, 0		; es:bx = buffer address pointer
@@ -50,7 +50,7 @@ err:
 	mov ah, 0
 	int 16h
 	int 19h			;reboot
-	
+
 _print:
 	pusha
 	mov bp, sp

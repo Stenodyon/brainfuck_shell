@@ -2,7 +2,7 @@
 NASM=bin/nasm
 BOCHS=bin/bochs
 
-default: .FORCE bfos.img
+default: bfos.img
 
 bfos.img: os.img boot.img
 	cat boot.img os.img > bfos.img
@@ -19,7 +19,7 @@ oscode.asm: oscode/oscode.bf
 	python3 bfcompiler/compiler.py oscode/oscode.bf -o oscode.asm
 #	cat -n oscode.asm
 
-os.img: oscode.asm
+os.img: os.asm
 	$(NASM) os.asm -f bin -o os.img -l oslist
 
 boot.img: boot.asm

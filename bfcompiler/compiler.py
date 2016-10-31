@@ -24,7 +24,7 @@ def compile( program, depth=0 ):
         if clearmatch:
             substring = clearmatch.group(2)
             value     = 2 * substring.count( '+' ) - len( substring )
-            out    += "    mov byte [ds:bx], byte %d\n" % ( value % 256 )
+            out    += "    mov byte [ebx], byte %d\n" % ( value % 256 )
             program = clearmatch.group(3)
             continue
         countersmatch = counters.match( program )
@@ -32,7 +32,7 @@ def compile( program, depth=0 ):
             substring = countersmatch.group(1)
             value     = 2 * substring.count( '+' ) - len( substring )
             if value != 0:
-                out      += "    add byte [ds:bx], byte %d\n" % ( value % 256 )
+                out      += "    add byte [ebx], byte %d\n" % ( value % 256 )
             program   = countersmatch.group(2)
             continue
         ptrmovementsmatch = ptrmovements.match( program )
@@ -50,7 +50,7 @@ def compile( program, depth=0 ):
             endlabel   = "loop_ended_%d" % loops
             loops += 1
             out += "%s:\n" % startlabel
-            out += "    mov al, byte [ds:bx]\n"
+            out += "    mov al, byte [ebx]\n"
             out += "    or al, al\n"
             out += "    jz %s\n" % endlabel
             newout, program = compile( program[1:], depth+1 )
@@ -58,7 +58,7 @@ def compile( program, depth=0 ):
             out += "    jmp %s\n" % startlabel
             out += "%s:\n" % endlabel
         if program != "" and program[0] == ".":
-            out    += "    mov al, byte [ds:bx]\n"
+            out    += "    mov al, byte [ebx]\n"
             out    += "    call putc\n"
             program = program[1:]
         if program != "" and program[0] == ",":

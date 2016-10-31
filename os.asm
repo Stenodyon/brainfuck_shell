@@ -1,14 +1,34 @@
-	%define memsize 200
+    %define video_memory 0xb8000
 
-org	0x0000
+org	0x500
 
 bits 	16
 
 main:
-	mov ax, 0x1000
-	mov ds, ax
+    xor ax, ax
+    mov ds, ax
+    cli
+    lgdt [gdtr]
+    ; for i386
+    ; Setting the lsb of cr0 to 1 activates protected mode
+    mov eax, cr0
+    or eax, 1
+    mov cr0, eax
+    jmp 0x8:pmode
+
+    ; Protected mode beyond this point
+
+bits 32
+
+pmode:
+    mov ax, 0x10
+    mov ds, ax
+    mov ss, ax
+    mov es, ax
+    mov dword [0xb8000], 0x07690748
 	mov si, hello
 	call print
+    jmp end_loop
 
 	call execute
 
@@ -16,35 +36,96 @@ end:
 	mov si, stopmsg
 	call print
 end_loop:
-	cli
 	hlt
 	jmp end_loop
 
 ;; ======================= FUNCTIONS ================================
 
 print:				;prints a string with a newline
-	pusha
+	push eax
 	mov bp, sp
 cont:
-	lodsb
+	mov al, byte [si]
+    inc si
 	or al, al
 	jz dne
-	mov ah, 0x0e
-	mov bx, 0
-	int 10h
+	call putc
 	jmp cont
 dne:
 	mov sp, bp
-	popa
+	pop eax
 	ret
 
-putc:				;puts a character in al onto the screen
-	mov ah, 0x0e
-	push bx
-	mov bx, 0
-	int 10h
-	pop bx
+cursor:
+    db 0x00, 0x04
+
+; Advances the cursor by 1
+_advance_cursor:
+    push eax
+    mov al, byte [cursor]
+    add al, 1
+    cmp al, 80
+    jge end_of_line
+    mov byte [cursor], al
+_advance_cursor_end:
+    pop eax
+    ret
+end_of_line:
+    mov byte [cursor], 0x00
+    add byte [cursor+1], 1
+    jmp _advance_cursor_end
+
+; Moves the cursor to the left
+_back_cursor:
+    cmp byte [cursor], 0
+    jle _back_cursor_end
+    sub byte [cursor], 1
+_back_cursor_end:
+    ret
+
+; Pushes the cursor to the next line
+_next_line:
+    push eax
+    mov byte [cursor], 0x00
+    cmp byte [cursor+1], 25
+    jge _next_line_end
+    add byte [cursor+1], 1
+_next_line_end:
+    pop eax
+    ret
+
+; Puts a character in al onto the screen
+putc:
+    cmp al, 13
+    je putc_nextline
+    cmp al, 10
+    je putc_ignore
+    push ebx
+    push eax
+    mov ebx, video_memory
+    xor eax, eax
+    mov al, byte [cursor+1]
+    mov edx, 160
+    mul edx
+    add ebx, eax
+    xor eax, eax
+    mov al, byte [cursor]
+    mov edx, 2
+    mul edx
+    add ebx, eax
+    pop eax
+    mov [ebx], al
+    mov byte [ebx+1], 0x07
+    pop ebx
+    call _advance_cursor
+putc_ignore:
 	ret
+putc_backspace:
+    call _back_cursor
+    ret
+putc_nextline:
+    call _next_line
+    ret
 
 getc:
 	pusha
@@ -64,6 +145,28 @@ abort:
 	hello db "Execution started", 10, 13, 0
 	stopmsg db "Execution stopped.", 10, 13, 0
 	abrtmsg db "ERROR execution aborted", 10, 13, 0
+gdtr:
+    dw gdt_end - gdt - 1
+    dd gdt
+gdt:
+    ; NULL ENTRY
+    dd 0
+    dd 0
+    ; CODE ENTRY
+    dw 0x0ffff
+    dw 0
+    db 0
+    db 10011010b
+    db 11001111b
+    db 0
+    ; DATA ENTRY
+    dw 0x0ffff
+    dw 0
+    db 0
+    db 10010010b
+    db 11001111b
+    db 0
+gdt_end:
 
 execute:
 	pusha
