@@ -20,7 +20,9 @@ oscode.asm: oscode/oscode.bf
 #	cat -n oscode.asm
 
 os.img: os.asm oscode.asm
-	$(NASM) os.asm -f bin -o os.img -l oslist
+	$(NASM) os.asm -f elf64 -o os.o -l oslist
+	ld -T linker.ld -o _os.img -O2 -nostdlib os.o
+	dd bs=1280 skip=1 if=_os.img of=os.img # Remove the elf header
 
 boot.img: boot.asm
 	$(NASM) boot.asm -f bin -o boot.img -l bootlist
@@ -38,3 +40,4 @@ run:
 
 clean:
 	-rm bfos.img os.img boot.img oslist oscode/oscode.bf oscode.asm
+	-rm os.o _os.img

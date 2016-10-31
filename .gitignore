@@ -11,3 +11,5 @@ os.img
 oslist.txt
 bfos.img
 __pycache__/
+oslist
+_os.img

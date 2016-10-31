@@ -1,9 +1,8 @@
     %define video_memory 0xb8000
 
-org	0x500
-
 bits 	16
 
+global main
 main:
     xor ax, ax
     mov ds, ax
@@ -148,6 +147,7 @@ getc:
     push eax
     push edx
     xor eax, eax
+    xor edx, edx
     mov dl, byte [getc_lastchar]
 getc_loop:
     in al, 0x60
@@ -159,14 +159,14 @@ getc_loop:
     jmp getc_loop
 getc_end:
     mov byte [getc_lastchar], dl
-    push dl
+    push edx
     and dl, 0x7F ; Remove last bit
     cmp dl, K_ALT_L
     jne _getc_notalt
     mov al, ALT
     call set_key_flag
 _getc_notalt:
-    pop dl
+    pop edx
     push ebx
     mov ebx, scancode
     add ebx, eax
