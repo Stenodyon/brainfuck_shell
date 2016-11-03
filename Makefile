@@ -1,6 +1,7 @@
 
 NASM=bin/nasm
 BOCHS=bin/bochs
+export PATH := /usr/local/cross/bin:$(PATH)
 
 default: bfos.img
 
@@ -29,7 +30,7 @@ boot.img: boot.asm
 	$(NASM) boot.asm -f bin -o boot.img -l bootlist
 
 %.o: %.c
-	gcc -c $< -o $@ -std=gnu99 -ffreestanding -O2 -Wall -Wextra
+	i686-elf-gcc -c $< -o $@ -std=gnu99 -ffreestanding -O2 -Wall -Wextra
 
 .FORCE:
 
@@ -44,4 +45,4 @@ run:
 
 clean:
 	-rm bfos.img os.img boot.img oslist oscode/oscode.bf oscode.asm
-	-rm os.o _os.img
+	-rm _os.img *.o
