@@ -29,15 +29,13 @@ pmode:
     mov ds, ax
     mov ss, ax
     mov es, ax
+    mov fs, ax
+    mov gs, ax
     mov dword [0xb8000], 0x07690748
 	mov si, hello
 	call print
-
     call enable_A20
-
     call kernel_main
-
-	call execute
 
 end:
 	mov si, stopmsg
@@ -212,11 +210,3 @@ gdt:
     db 11001111b
     db 0
 gdt_end:
-
-execute:
-	pusha
-	mov bx, tape
-	%include "oscode.asm"
-	popa
-	ret
-tape:

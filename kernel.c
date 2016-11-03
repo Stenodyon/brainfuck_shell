@@ -48,5 +48,7 @@ void putc(char c)
 
 void kernel_main(void)
 {
-    memcpy((void*)(VIDEO + 2 * V_W), (void*)VIDEO, 2 * V_W);
+    putc('>');
+    //move(1,1);
+    //memcpy((void*)(VIDEO + 2 * V_W), (void*)VIDEO, 2 * V_W);
 }

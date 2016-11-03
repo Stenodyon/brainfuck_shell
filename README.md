@@ -19,14 +19,14 @@ configuration:
 
 ```binutils```
 ```bash
-./configure --target=i686-elf --prefix="/usr/local/cross" --with-sysroot --disable-nls --disable-werror
+./configure --target=x86_64-elf --prefix="/usr/local/cross" --with-sysroot --disable-nls --disable-werror
 make
 make install
 ```
 
 ```gcc```
 ```bash
-./configure --target=i686-elf --prefix="/usr/local/cross" --disable-nls --enable-languages=c --without-headers
+./configure --target=x86_64-elf --prefix="/usr/local/cross" --disable-nls --enable-languages=c --without-headers
 make all-gcc
 make all-target-libgcc
 make install-gcc

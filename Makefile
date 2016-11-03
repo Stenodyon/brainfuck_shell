@@ -1,6 +1,7 @@
 
 NASM=bin/nasm
 BOCHS=bin/bochs
+GCC=x86_64-elf-gcc
 export PATH := /usr/local/cross/bin:$(PATH)
 
 default: bfos.img
@@ -23,14 +24,13 @@ oscode.asm: oscode/oscode.bf
 os.img: os.asm oscode.asm kernel.o
 	$(NASM) os.asm -f elf64 -o os.o -l oslist
 	$(NASM) entry.asm -f elf64 -o entry.o
-	ld -T linker.ld -o _os.img -O2 -nostdlib entry.o kernel.o os.o
-	dd bs=1280 skip=1 if=_os.img of=os.img # Remove the elf header
+	ld -T linker.ld -o os.img -O2 -nostdlib entry.o kernel.o os.o
 
 boot.img: boot.asm
 	$(NASM) boot.asm -f bin -o boot.img -l bootlist
 
 %.o: %.c
-	i686-elf-gcc -c $< -o $@ -std=gnu99 -ffreestanding -O2 -Wall -Wextra
+	$(GCC) -c $< -o $@ -std=gnu99 -ffreestanding -O2 -Wall -Wextra
 
 .FORCE:
 
